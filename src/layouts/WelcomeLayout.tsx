@@ -27,22 +27,24 @@ export const WelcomeLayout: React.FC = () => {
   })
 
   return (
-    <div>
-      <header>
-        <p>
+    <div className="bg-#d1ecf8" h-screen flex flex-col items-stretch>
+      <header shrink-0>
+        <p align-revert flex justify-end p-32px>
           <Link to="/welcome/xxx">跳过</Link>
         </p>
-        <img src={logo} />
-        <h1>Money Mate</h1>
+        <div text-center>
+          <img src={logo} w-50px />
+          <h1 text='#5db29e' >Money Mate</h1>
+        </div>
       </header>
-      <div>
+      <main shrink-0 grow-1 flex justify-center items-center>
         {transitions((style, pathName) =>
           <animated.div key={pathName} style={style}>
             {map.current[pathName]}
           </animated.div>
         )}
-      </div>
-      <footer>
+      </main>
+      <footer shrink-0 text-center text-24px pb-64px pt-64px>
         <Link to={linkMap[location.pathname]}>Next</Link>
       </footer>
     </div>
