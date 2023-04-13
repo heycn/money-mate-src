@@ -1,9 +1,11 @@
 import { animated, useTransition } from '@react-spring/web'
 import type { ReactNode } from 'react'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import type { Pathname } from 'react-router-dom'
 import { Link, useLocation, useOutlet } from 'react-router-dom'
 import logo from '../assets/images/logo.svg'
+
+type Position = Record<'position', 'relative' | 'absolute'>
 
 const linkMap: Record<Pathname, Pathname> = {
   '/welcome/1': '/welcome/2',
@@ -17,13 +19,14 @@ export const WelcomeLayout: React.FC = () => {
   const location = useLocation()
   const outlet = useOutlet()
   map.current[location.pathname] = outlet
-  const firstPath = location.pathname === '/welcome/1'
-
+  const [extraStyle, setExtraStyle] = useState<Position>({ position: 'relative' })
   const transitions = useTransition(location.pathname, {
-    form: { transform: firstPath ? 'translateX(0%)' : 'translateX(100%)' },
+    from: { transform: location.pathname === '/welcome/1' ? 'translateX(0%)' : 'translateX(100%)' },
     enter: { transform: 'translateX(0%)' },
     leave: { transform: 'translateX(-100%)' },
-    config: { duration: 350 }
+    config: { duration: 350 },
+    onStart: () => setExtraStyle({ position: 'absolute' }),
+    onRest: () => setExtraStyle({ position: 'relative' })
   })
 
   return (
@@ -33,18 +36,18 @@ export const WelcomeLayout: React.FC = () => {
           <Link to="/welcome/xxx">跳过</Link>
         </p>
         <div text-center>
-          <img src={logo} w-40px />
+          <img src={logo} h-40px />
           <h1 text='#5db29e' >Money Mate</h1>
         </div>
       </header>
-      <main shrink-1 grow-1 flex justify-center items-center>
+      <main shrink-1 grow-1 relative>
         {transitions((style, pathName) =>
-          <animated.div key={pathName} style={style}>
+          <animated.div key={pathName} style={{ ...style, ...extraStyle }} flex justify-center items-center w="100%" h="100%" >
             {map.current[pathName]}
           </animated.div>
         )}
       </main>
-      <footer shrink-0 text-center text-24px pb-64px pt-64px>
+      <footer className="h-1/7" shrink-0 text-center text-24px >
         <Link to={linkMap[location.pathname]}>Next</Link>
       </footer>
     </div>
