@@ -33,11 +33,11 @@ export const WelcomeLayout: React.FC = () => {
           <Link to="/welcome/xxx">跳过</Link>
         </p>
         <div text-center>
-          <img src={logo} w-50px />
+          <img src={logo} w-40px />
           <h1 text='#5db29e' >Money Mate</h1>
         </div>
       </header>
-      <main shrink-0 grow-1 flex justify-center items-center>
+      <main shrink-1 grow-1 flex justify-center items-center>
         {transitions((style, pathName) =>
           <animated.div key={pathName} style={style}>
             {map.current[pathName]}

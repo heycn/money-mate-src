@@ -1,12 +1,12 @@
-import p1 from '../assets/images/welcome1.svg'
+import logo from '../assets/images/welcome1.svg'
 
 export const Welcome1: React.FC = () => {
   return (
     <div>
-      <img src={p1} w-200px />
+      <img src={logo} w-200px />
       <h2 text-center>
-        MoneyMate <br />
-        你的资金管家
+        Money Mate <br />
+        你的记账伴侣
       </h2>
     </div>
   )
