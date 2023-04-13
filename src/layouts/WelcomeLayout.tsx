@@ -31,7 +31,7 @@ export const WelcomeLayout: React.FC = () => {
 
   return (
     <div className="bg-#d1ecf8" h-screen flex flex-col items-stretch>
-      <header shrink-0>
+      <header shrink-0 mb-32px >
         <p align-revert flex justify-end p-32px>
           <Link to="/welcome/xxx">跳过</Link>
         </p>
