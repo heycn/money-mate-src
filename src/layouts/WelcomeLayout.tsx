@@ -1,11 +1,12 @@
 import { animated, useTransition } from '@react-spring/web'
-import type { ReactNode } from 'react'
+import { ReactNode, useEffect } from 'react'
 import { useRef, useState } from 'react'
-import type { Pathname } from 'react-router-dom'
+import { Pathname, useNavigate } from 'react-router-dom'
 import { Link, useLocation, useOutlet } from 'react-router-dom'
 import logo from '../assets/images/logo.svg'
+import { useSwipe } from '../hooks/useSwipe'
 
-const linkMap: Record<Pathname, Pathname> = {
+const ForwardLinkMap: Record<Pathname, Pathname> = {
   '/welcome/1': '/welcome/2',
   '/welcome/2': '/welcome/3',
   '/welcome/3': '/welcome/4',
@@ -13,6 +14,7 @@ const linkMap: Record<Pathname, Pathname> = {
 }
 
 export const WelcomeLayout: React.FC = () => {
+  const animating = useRef(false)
   const map = useRef<Record<string, ReactNode>>({})
   const location = useLocation()
   const outlet = useOutlet()
@@ -24,8 +26,22 @@ export const WelcomeLayout: React.FC = () => {
     leave: { transform: 'translateX(-100%)' },
     config: { duration: 350 },
     onStart: () => setExtraStyle({ position: 'absolute' }),
-    onRest: () => setExtraStyle({ position: 'relative' })
+    onRest: () => {
+      animating.current = false
+      setExtraStyle({ position: 'relative' })
+    }
   })
+
+  const swipeDiv = useRef<HTMLDivElement>(null)
+  const direction = useSwipe(swipeDiv, { onTouchStart: e => e.preventDefault() })
+  const nav = useNavigate()
+  useEffect(() => {
+    if (direction === 'left') {
+      if (animating.current) { return }
+      animating.current = true
+      nav(ForwardLinkMap[location.pathname])
+    }
+  }, [direction, location.pathname, ForwardLinkMap])
 
   return (
     <div bg="#d1ecf8" h-screen flex flex-col items-stretch>
@@ -38,7 +54,7 @@ export const WelcomeLayout: React.FC = () => {
           <h1 text='#5db29e' >Money Mate</h1>
         </div>
       </header>
-      <main shrink-1 grow-1 relative>
+      <main shrink-1 grow-1 relative ref={swipeDiv}>
         {transitions((style, pathName) =>
           <animated.div key={pathName} style={{ ...style, ...extraStyle }}
             flex justify-center items-center w="100%" h="100%">
@@ -47,7 +63,7 @@ export const WelcomeLayout: React.FC = () => {
         )}
       </main>
       <footer h="1/7" shrink-0 text-center text-24px >
-        <Link to={linkMap[location.pathname]}>Next</Link>
+        <Link to={ForwardLinkMap[location.pathname]}>Next</Link>
       </footer>
     </div>
   )
