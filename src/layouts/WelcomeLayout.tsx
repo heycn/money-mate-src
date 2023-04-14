@@ -10,7 +10,7 @@ const nextLinkMap: Record<Pathname, Pathname> = {
   '/welcome/1': '/welcome/2',
   '/welcome/2': '/welcome/3',
   '/welcome/3': '/welcome/4',
-  '/welcome/4': '/welcome/xxx'
+  '/welcome/4': '/home'
 }
 const prevLinkMap: Record<Pathname, Pathname> = {
   '/welcome/2': '/welcome/1',
@@ -46,6 +46,9 @@ export const WelcomeLayout: React.FC = () => {
     return transitionRef.current
   }, [direction, location.pathname])
   const transitions = useTransition(location.pathname, { ...transitionConfig })
+  const onSkip = () => {
+    localStorage.setItem('watched', 'yes')
+  }
 
   const nav = useNavigate()
   useEffect(() => {
@@ -66,7 +69,7 @@ export const WelcomeLayout: React.FC = () => {
     <div bg="#d1ecf8" h-screen flex flex-col items-stretch>
       <header shrink-0 mb-32px >
         <p align-revert flex justify-end p-32px>
-          <Link to="/welcome/xxx" replace>跳过</Link>
+          <Link to="/welcome/xxx" replace onClick={onSkip}>跳过</Link>
         </p>
         <div text-center>
           <img src={logo} h-40px />
@@ -82,7 +85,7 @@ export const WelcomeLayout: React.FC = () => {
         )}
       </main>
       <footer h="1/7" shrink-0 text-center text-24px >
-        <Link to={nextLinkMap[location.pathname]} replace>Next</Link>
+        <Link to={nextLinkMap[location.pathname]} replace>下一页</Link>
       </footer>
     </div>
   )
