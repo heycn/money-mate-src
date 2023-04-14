@@ -28,13 +28,14 @@ export const WelcomeLayout: React.FC = () => {
 
   const swipeDiv = useRef<HTMLDivElement>(null)
   const direction = useSwipe(swipeDiv, { onTouchStart: e => e.preventDefault() })
+  const transitionRef = useRef({})
   const transitionConfig = useMemo(() => {
     const translateX = direction === 'right' ? -100 : 100
     const first = location.pathname === '/welcome/1' && direction === ''
-    return {
+    transitionRef.current = {
       from: { opacity: first ? 1 : 0, transform: `translateX(${first ? 0 : translateX}%)` },
       enter: { opacity: 1, transform: 'translateX(0%)' },
-      leave: { opacity: 0, transform: `translateX(${-translateX}%)`, },
+      leave: { opacity: 0, transform: `translateX(${-translateX / 2}%)`, },
       config: { duration: 350 },
       onStart: () => setExtraStyle({ position: 'absolute' }),
       onRest: () => {
@@ -42,6 +43,7 @@ export const WelcomeLayout: React.FC = () => {
         setExtraStyle({ position: 'relative' })
       }
     }
+    return transitionRef.current
   }, [direction, location.pathname])
   const transitions = useTransition(location.pathname, { ...transitionConfig })
 
