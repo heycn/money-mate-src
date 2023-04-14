@@ -69,7 +69,7 @@ export const WelcomeLayout: React.FC = () => {
     <div bg="#d1ecf8" h-screen flex flex-col items-stretch>
       <header shrink-0 mb-32px >
         <p align-revert flex justify-end p-32px>
-          <Link to="/welcome/xxx" replace onClick={onSkip}>跳过</Link>
+          <Link to="/home" replace onClick={onSkip}>跳过</Link>
         </p>
         <div text-center>
           <img src={logo} h-40px />
