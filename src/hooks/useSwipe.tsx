@@ -7,6 +7,7 @@ interface Config {
   onTouchEnd?: (e: TouchEvent) => void
 }
 
+const safeDistance = 16
 export const useSwipe = (elementRef: RefObject<HTMLElement>, config?: Config) => {
   const [direction, setDirection] = useState<'' | 'left' | 'right'>('')
   const startX = useRef(-1)
@@ -19,9 +20,12 @@ export const useSwipe = (elementRef: RefObject<HTMLElement>, config?: Config) =>
     config?.onTouchMove?.(e)
     const newX = e.touches[0].clientX
     const distance = newX - startX.current
-    if (Math.abs(distance) < 3) setDirection('')
-    if (distance > 0) setDirection('right')
-    if (distance < 0) setDirection('left')
+    if (Math.abs(distance) < safeDistance) {
+      setDirection('')
+    } else {
+      if (distance > safeDistance) setDirection('right')
+      if (distance < safeDistance) setDirection('left')
+    }
   }
   const onTouchEnd = (e: TouchEvent) => {
     config?.onTouchEnd?.(e)
