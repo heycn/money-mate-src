@@ -5,6 +5,7 @@ import { Pathname, useNavigate } from 'react-router-dom'
 import { Link, useLocation, useOutlet } from 'react-router-dom'
 import logo from '../assets/images/logo.svg'
 import { useSwipe } from '../hooks/useSwipe'
+import { useLocalStore } from '../stores/useLocalStore'
 
 const nextLinkMap: Record<Pathname, Pathname> = {
   '/welcome/1': '/welcome/2',
@@ -46,9 +47,8 @@ export const WelcomeLayout: React.FC = () => {
     return transitionRef.current
   }, [direction, location.pathname])
   const transitions = useTransition(location.pathname, { ...transitionConfig })
-  const onSkip = () => {
-    localStorage.setItem('watched', 'yes')
-  }
+  const { setReadFeatures } = useLocalStore()
+  const onSkip = () => { setReadFeatures(true) }
 
   const nav = useNavigate()
   useEffect(() => {
