@@ -1,6 +1,6 @@
 import { animated, useTransition } from '@react-spring/web'
-import { ReactNode, useEffect, useMemo } from 'react'
-import { useRef, useState } from 'react'
+import type { ReactNode } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Pathname, useNavigate } from 'react-router-dom'
 import { Link, useLocation, useOutlet } from 'react-router-dom'
 import logo from '../assets/images/logo.svg'
@@ -21,9 +21,9 @@ const prevLinkMap: Record<Pathname, Pathname> = {
 export const WelcomeLayout: React.FC = () => {
   const animating = useRef(false)
   const map = useRef<Record<string, ReactNode>>({})
-  const location = useLocation()
+  const { pathname } = useLocation()
   const outlet = useOutlet()
-  map.current[location.pathname] = outlet
+  map.current[pathname] = outlet
   const [extraStyle, setExtraStyle] = useState<{ position: 'relative' | 'absolute' }>({ position: 'relative' })
 
   const swipeDiv = useRef<HTMLDivElement>(null)
@@ -73,7 +73,7 @@ export const WelcomeLayout: React.FC = () => {
           <h1 text='#5db29e' >Money Mate</h1>
         </div>
       </header>
-      <main shrink-1 grow-1 relative ref={swipeDiv}>
+      <main shrink-1 grow-1 relative w-full overflow-hidden ref={swipeDiv}>
         {transitions((style, pathName) =>
           <animated.div key={pathName} style={{ ...style, ...extraStyle }}
             flex justify-center items-center w="100%" h="100%">
