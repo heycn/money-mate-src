@@ -1,10 +1,11 @@
 import logo from '../assets/images/logo.svg'
 import useSWR from 'swr'
 import axios from 'axios'
+import { ajax } from '../lib/ajax'
 
 export const Home: React.FC = () => {
   const { data, error } = useSWR('/api/v1/me', path => {
-    return axios.get(path)
+    return ajax.get(path)
   })
   console.log('data:', data)
   console.log('error', error)
