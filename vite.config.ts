@@ -1,3 +1,4 @@
+import { svgsprites } from './vite_plugins/svgsprites';
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import Unocss from 'unocss/vite'
@@ -11,6 +12,7 @@ export default defineConfig(({ command }) => ({
   plugins: [
     Unocss(),
     react(),
-    viteMockServe()
+    viteMockServe(),
+    svgsprites()
   ],
 }))

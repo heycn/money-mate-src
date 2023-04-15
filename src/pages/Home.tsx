@@ -3,6 +3,8 @@ import useSWR from 'swr'
 import { ajax } from '../lib/ajax'
 import { Navigate } from 'react-router-dom'
 import { useTitle } from '../hooks/useTitle'
+import { Loading } from '../components/Loading'
+import { AddItemFloatButton } from '../components/AddItemFloatButton'
 
 interface Props {
   title?: string
@@ -19,7 +21,7 @@ export const Home: React.FC<Props> = props => {
   )
 
   if (meLoading || itemsLoading) {
-    return <div>加载中...</div>
+    return <Loading />
   }
   if (itemsData?.resources[0]) {
     return <Navigate to="/items" replace />
@@ -36,6 +38,7 @@ export const Home: React.FC<Props> = props => {
           去记账
         </button>
       </div>
+      <AddItemFloatButton />
     </div>
   )
 }
