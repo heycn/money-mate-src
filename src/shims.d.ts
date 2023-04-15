@@ -11,5 +11,7 @@ declare module 'react' {
     w?: string
     h?: string
     bg?: string
+    mt?: string
+    rounded?: string
   }
 }

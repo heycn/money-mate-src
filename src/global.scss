@@ -25,6 +25,11 @@ h6 {
 
 html {
   font-size: 14px;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 img {
@@ -32,5 +37,7 @@ img {
 }
 
 button {
-  font-size: inherit;
+  font: inherit;
+  border: none;
+  background: none;
 }
