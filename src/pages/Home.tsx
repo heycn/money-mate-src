@@ -1,6 +1,14 @@
 import logo from '../assets/images/logo.svg'
+import useSWR from 'swr'
+import axios from 'axios'
 
 export const Home: React.FC = () => {
+  const { data, error } = useSWR('/api/v1/me', path => {
+    return axios.get(path)
+  })
+  console.log('data:', data)
+  console.log('error', error)
+
   return (
     <div text-center flex-col bg="#d1ecf8" h-screen >
       <img mt='1/4' h-32 src={logo} />
