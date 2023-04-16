@@ -1,31 +1,28 @@
 interface Props {
   items: Item[]
 }
+
 export const ItemsList: React.FC<Props> = ({ items }) => {
-  return <div>
-    <ol mx-16px>
-      {items.map(item =>
-        <li key={item.id} grid grid-cols="[auto_1fr_auto]" grid-rows-2 px-16px py-8px gap-x-12px
-          bg-white rounded-xl mb-8px
-        >
-          <div row-start-1 col-start-1 row-end-3 col-end-2 text-24px w-48px h-48px
-            bg="#f6f6f6" rounded="50%" flex justify-center items-center>
-            😘
-          </div>
-          <div row-start-1 col-start-2 row-end-2 col-end-3>
-            旅行
-          </div>
-          <div row-start-2 col-start-2 row-end-3 col-end-4 text="#999999">
-            2011年1月1日
-          </div>
-          <div row-start-1 col-start-3 row-end-2 col-end-4 text="#53A867">
-            -999
-          </div>
-        </li>
-      )}
-    </ol>
-    <div p-16px>
-      <button m-btn>加载更多</button>
+  return (
+    <div>
+      <ol mx-16px>
+        {items.map(item =>
+          <li key={item.id} flex px-16px justify-between py-4px
+            bg-white rounded-xl mb-8px items-center>
+            <div flex>
+              <div text-34px mr-8px>😘</div>
+              <div flex flex-col justify-center py-8px>
+                <div text='#333' text-15px>旅行</div>
+                <div text='#999' text-13px font-300 pt-4px>2011-01-01</div>
+              </div>
+            </div>
+            <div text='#181818' text-18px font-500>-999</div>
+          </li>
+        )}
+      </ol>
+      <div p-16px>
+        <button m-btn>加载更多</button>
+      </div>
     </div>
-  </div>
+  )
 }
