@@ -34,7 +34,7 @@ export const Home: React.FC<Props> = props => {
         好好记账 自由生活
       </h1>
       <div h-48px bg='#36b59d' rounded-7 mx-12px>
-        <button w='100%' h='100%' text-16px font-700 text-white>
+        <button w='100%' h='100%' text-16px font-700 text='#f4f4f4'>
           去记账
         </button>
       </div>
