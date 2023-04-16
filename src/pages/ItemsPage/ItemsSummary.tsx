@@ -1,9 +1,9 @@
 export const ItemsSummary: React.FC = () => {
   return (
     <ol bg='#ffffff' flex justify-between items-center m-16px rounded-10px py-12px px-24px
-      text-center color='#798196'>
+      text-center color='#798196' shadow-lg shadow='light-7'>
       <li>
-        <div color='#36b49d' font-900 text-22px>
+        <div color='#33c659' font-900 text-22px>
           <span text-12px pr-1>¥</span>
           1000
         </div>

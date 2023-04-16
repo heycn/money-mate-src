@@ -33,10 +33,8 @@ export const Home: React.FC<Props> = props => {
       <h1 text-center leading-32 text-6 font-500>
         好好记账 自由生活
       </h1>
-      <div h-48px bg='#36b59d' rounded-7 mx-12px>
-        <button w='100%' h='100%' text-16px font-700 text='#f4f4f4'>
-          去记账
-        </button>
+      <div px-16px>
+        <button m-btn>去记账</button>
       </div>
       <AddItemFloatButton />
     </div>
