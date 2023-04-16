@@ -6,14 +6,18 @@ import { ItemsList } from "./ItemsPage/ItemsList"
 import { ItemsSummary } from "./ItemsPage/ItemsSummary"
 import { useTitle } from "../hooks/useTitle"
 
-export const ItemsPage: React.FC = () => {
+interface Props {
+  title?: string
+}
+
+export const ItemsPage: React.FC<Props> = ({title}) => {
   const [currentTimeRange, setCurrentTimeRange] = useState<TimeRange>('thisMonth')
-  useTitle('收支明细')
+  useTitle(title)
 
   return (
     <div>
       <header bg-gradient='to-b from-#addcd4' px-16px shadow-neutral-1 shadow-xl>
-        <Topnav title="收支明细" />
+        <Topnav title={title} />
         <ItemRangePicker currentTimeRange={currentTimeRange} onChange={setCurrentTimeRange} />
       </header>
       <ItemsSummary />

@@ -21,5 +21,5 @@ export const router = createBrowserRouter([
       { path: '4', element: <Welcome4 /> }
     ]
   },
-  { path: '/items', element: <ItemsPage /> }
+  { path: '/items', element: <ItemsPage title='收支明细' /> }
 ])
