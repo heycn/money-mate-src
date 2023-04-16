@@ -10,13 +10,13 @@ interface Props {
   title?: string
 }
 
-export const ItemsPage: React.FC<Props> = ({title}) => {
+export const ItemsPage: React.FC<Props> = ({ title }) => {
   const [currentTimeRange, setCurrentTimeRange] = useState<TimeRange>('thisMonth')
   useTitle(title)
 
   return (
-    <div>
-      <header bg-gradient='to-b from-#addcd4' px-16px shadow-neutral-1 shadow-xl>
+    <div h-screen bg='#f6f6f6'>
+      <header bg-gradient='to-b from-#addcd4' px-16px shadow-lg className="shadow='light-900'">
         <Topnav title={title} />
         <ItemRangePicker currentTimeRange={currentTimeRange} onChange={setCurrentTimeRange} />
       </header>
