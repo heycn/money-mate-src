@@ -24,7 +24,8 @@ export const ItemsPage: React.FC<Props> = ({ title }) => {
       happen_at: '2021-01-01T00:00:00.000Z',
       created_at: '2021-01-01T00:00:00.000Z',
       updated_at: '2021-01-01T00:00:00.000Z',
-    }, {
+    },
+    {
       id: 2,
       kind: 'incomes',
       amount: 1000,
@@ -35,7 +36,7 @@ export const ItemsPage: React.FC<Props> = ({ title }) => {
       updated_at: '2021-01-01T00:00:00.000Z',
     }
   ])
-  const { visible } = useMenuStore()
+  const { visible, setVisible } = useMenuStore()
   useTitle(title)
 
   return (
@@ -47,7 +48,7 @@ export const ItemsPage: React.FC<Props> = ({ title }) => {
       <ItemsSummary />
       <ItemsList items={items} />
       <AddItemFloatButton />
-      {visible ? <TopMenu /> : null}
+      {visible ? <TopMenu onClickMask={() => setVisible(false)} /> : null}
     </div>
   )
 }
