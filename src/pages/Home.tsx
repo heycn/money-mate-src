@@ -28,7 +28,7 @@ export const Home: React.FC<Props> = props => {
   }
 
   return (
-    <div text-center flex-col h-screen bg='#ebf5f6' bg-gradient='to-tr from-#addcd4'>
+    <div text-center flex-col h-screen bg='#ebf5f6' bg-gradient='to-br from-#addcd4'>
       <img mt='1/4' h-32 src={logo} />
       <h1 text-center leading-32 text-6 font-500>
         好好记账 自由生活
