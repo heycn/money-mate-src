@@ -1,6 +1,5 @@
 import useSWRInfinite from 'swr/infinite'
 import { ajax } from '../../lib/ajax'
-import { CSSProperties } from 'react'
 import { Loading } from '../../components/Loading'
 
 const getKey = (pageIndex: number, prev: Resources<Item>) => {
@@ -22,10 +21,12 @@ const Tips: React.FC<{ text: string }> = ({ text }) => {
 
 export const ItemsList: React.FC = () => {
   const { data, error, size, setSize } = useSWRInfinite(
-    getKey, async path => (await ajax.get<Resources<Item>>(path)).data
+    getKey,
+    async path => (await ajax.get<Resources<Item>>(path)).data,
+    { revalidateFirstPage: false }
   )
-  const onLoadMore = () => setSize(size + 1)
 
+  const onLoadMore = () => setSize(size + 1)
   const isLoadingInitialData = !data && !error
   const isLoadingMore = data?.[size - 1] === undefined && !error
   const isLoading = isLoadingInitialData || isLoadingMore
