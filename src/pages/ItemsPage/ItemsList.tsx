@@ -1,5 +1,7 @@
 import useSWRInfinite from 'swr/infinite'
 import { ajax } from '../../lib/ajax'
+import { CSSProperties } from 'react'
+import { Loading } from '../../components/Loading'
 
 const getKey = (pageIndex: number, prev: Resources<Item>) => {
   if (prev) {
@@ -10,16 +12,29 @@ const getKey = (pageIndex: number, prev: Resources<Item>) => {
   return `/api/v1/items?page=${pageIndex + 1}` as `/${string}`
 }
 
+const Tips: React.FC<{ text: string }> = ({ text }) => {
+  return <p text-center font-300 color='#999'>
+    -
+    <span px-16px>{text}</span>
+    -
+  </p>
+}
+
 export const ItemsList: React.FC = () => {
-  const { data, size, setSize } = useSWRInfinite(
+  const { data, error, size, setSize } = useSWRInfinite(
     getKey, async path => (await ajax.get<Resources<Item>>(path)).data
   )
-  const onLoadMore = () => {
-    setSize(size + 1)
-  }
+  const onLoadMore = () => setSize(size + 1)
+
+  const isLoadingInitialData = !data && !error
+  const isLoadingMore = data?.[size - 1] === undefined && !error
+  const isLoading = isLoadingInitialData || isLoadingMore
 
   if (!data) {
-    return <div>暂无数据</div>
+    return <div>
+      {error && <Tips text='加载失败 请刷新页面' />}
+      {isLoading && <Loading />}
+    </div>
   } else {
     const last = data[data.length - 1]
     const { page, per_page, count } = last.pager
@@ -42,9 +57,13 @@ export const ItemsList: React.FC = () => {
         })}
       </ol>
       <div px-16px pt-24px pb-64px>
-        {hasMore
-          ? <button m-btn onClick={onLoadMore}>加载更多</button>
-          : <p text-center font-300 color='#999'>-<span px-16px>The End</span>-</p>}
+        {error && <Tips text='加载失败 请刷新页面' />}
+        {!hasMore
+          ? <Tips text={data[0].pager.count === 0 ? '所选范围 暂无记录' : 'The End'} />
+          : isLoading
+            ? <Loading />
+            : <button m-btn onClick={onLoadMore}>加载更多</button>
+        }
       </div>
     </>
   }
