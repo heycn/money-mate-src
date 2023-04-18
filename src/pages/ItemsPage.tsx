@@ -18,7 +18,7 @@ export const ItemsPage: React.FC<Props> = ({ title }) => {
   useTitle(title)
 
   return (
-    <div h-screen bg='#f6f6f6'>
+    <div h-screen>
       <header bg-gradient='to-b from-#addcd480' px-16px shadow-lg shadow-light-7>
         <TopNav title={title} />
         <ItemRangePicker currentTimeRange={currentTimeRange} onChange={setCurrentTimeRange} />
