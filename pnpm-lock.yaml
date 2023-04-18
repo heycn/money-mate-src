@@ -33,6 +33,9 @@ devDependencies:
   '@antfu/eslint-config':
     specifier: 0.38.4
     version: 0.38.4(eslint@8.38.0)(typescript@4.9.3)
+  '@faker-js/faker':
+    specifier: 7.6.0
+    version: 7.6.0
   '@types/react':
     specifier: 18.0.28
     version: 18.0.28
@@ -641,6 +644,11 @@ packages:
   /@eslint/js@8.38.0:
     resolution: {integrity: sha512-IoD2MfUnOV58ghIHCiil01PcohxjbYR/qCxsoC+xNgUwh1EY8jOOrYmu3d3a71+tJJ23uscEV4X2HJWMsPJu4g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    dev: true
+
+  /@faker-js/faker@7.6.0:
+    resolution: {integrity: sha512-XK6BTq1NDMo9Xqw/YkYyGjSsg44fbNwYRx7QK2CuoQgyy+f1rrTDHoExVM5PsyXCtfl2vs2vVJ0MN0yN6LppRw==}
+    engines: {node: '>=14.0.0', npm: '>=6.0.0'}
     dev: true
 
   /@humanwhocodes/config-array@0.11.8:
