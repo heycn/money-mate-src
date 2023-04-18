@@ -21,6 +21,9 @@ export const ItemsList: React.FC = () => {
   if (!data) {
     return <div>暂无数据</div>
   } else {
+    const last = data[data.length - 1]
+    const { page, per_page, count } = last.pager
+    const hasMore = (page - 1) * per_page + last.resources.length < count
     return <>
       <ol px-16px>
         {data.map(({ resources }) => {
@@ -38,8 +41,10 @@ export const ItemsList: React.FC = () => {
           ))
         })}
       </ol>
-      <div p-16px>
-        <button m-btn onClick={onLoadMore}>加载更多</button>
+      <div px-16px pt-24px pb-64px>
+        {hasMore
+          ? <button m-btn onClick={onLoadMore}>加载更多</button>
+          : <p text-center font-300 color='#999'>-<span px-16px>The End</span>-</p>}
       </div>
     </>
   }
