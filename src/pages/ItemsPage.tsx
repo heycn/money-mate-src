@@ -14,28 +14,6 @@ interface Props {
 
 export const ItemsPage: React.FC<Props> = ({ title }) => {
   const [currentTimeRange, setCurrentTimeRange] = useState<TimeRange>('thisMonth')
-  const [items] = useState<Item[]>([
-    {
-      id: 1,
-      kind: 'incomes',
-      amount: 1000,
-      user_id: 1,
-      tag_ids: [1],
-      happen_at: '2021-01-01T00:00:00.000Z',
-      created_at: '2021-01-01T00:00:00.000Z',
-      updated_at: '2021-01-01T00:00:00.000Z',
-    },
-    {
-      id: 2,
-      kind: 'incomes',
-      amount: 1000,
-      user_id: 1,
-      tag_ids: [1],
-      happen_at: '2021-01-01T00:00:00.000Z',
-      created_at: '2021-01-01T00:00:00.000Z',
-      updated_at: '2021-01-01T00:00:00.000Z',
-    }
-  ])
   const { visible, setVisible } = useMenuStore()
   useTitle(title)
 
@@ -46,7 +24,7 @@ export const ItemsPage: React.FC<Props> = ({ title }) => {
         <ItemRangePicker currentTimeRange={currentTimeRange} onChange={setCurrentTimeRange} />
       </header>
       <ItemsSummary />
-      <ItemsList items={items} />
+      <ItemsList />
       <AddItemFloatButton />
       <TopMenu visible={visible} onClickMask={() => setVisible(false)} />
     </div>
