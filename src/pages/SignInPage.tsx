@@ -25,7 +25,7 @@ export const SignInPage: React.FC<Props> = props => {
       <div px-26px z="[calc(var(--z-menu))]">
         <div my='1/7' text-center>
           <img h-48px src={logo} />
-          <h2 pt-16px text-22px text='#5eb39e'>登陆 MoneyMate</h2>
+          <h2 pt-16px text-22px text='#5eb39e'>登录 MoneyMate</h2>
         </div>
         <form flex flex-col onSubmit={onSubmit}>
           <div form-item-sing-in>

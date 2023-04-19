@@ -23,7 +23,7 @@ export const router = createBrowserRouter([
     ]
   },
   { path: '/items', element: <ItemsPage title='收支明细' /> },
-  { path: '/sign_in', element: <SignInPage title='登陆' /> },
+  { path: '/sign_in', element: <SignInPage title='登录' /> },
   { path: '/chart', element: <div>图表</div> },
   { path: '/export', element: <div>敬请期待</div> },
   { path: '/tags', element: <div>标签</div> },
