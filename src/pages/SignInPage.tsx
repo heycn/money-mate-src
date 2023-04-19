@@ -31,7 +31,7 @@ export const SignInPage: React.FC<Props> = props => {
             <button send-code>发送验证码</button>
           </div>
         </form>
-        <button mt-64px m-btn>登陆</button>
+        <button mt-64px m-btn>登录</button>
       </div>
       <img className='fixed bottom--32px left-0 w-100%' src={bottom} z="[calc(var(--z-menu)-1)]" />
     </div>
