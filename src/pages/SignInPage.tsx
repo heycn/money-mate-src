@@ -1,6 +1,7 @@
 import logo from '../assets/images/logo.svg'
 import { useTitle } from '../hooks/useTitle'
 import bottom from '../assets/images/bottom.svg'
+import { Icon } from '../components/Icon'
 
 interface Props {
   title?: string
@@ -9,16 +10,26 @@ export const SignInPage: React.FC<Props> = props => {
   useTitle(props?.title)
 
   return (
-    <div h-screen flex flex-col justify-between bg='#f6f6f6'>
-      <div px-26px>
-        <div text-center>
-          <img my='1/6' h-20 src={logo} />
+    <div fixed left-0 top-0 w-screen h-screen flex flex-col justify-between bg='#f6f6f6'>
+      <div px-26px z="[calc(var(--z-menu))]">
+        <div my='1/7' text-center>
+          <img h-48px src={logo} />
+          <h2 pt-16px text-22px text='#5eb39e'>登陆 MoneyMate</h2>
         </div>
-        <h2 py-16px text-18px font-300 text='#181818'>使用邮箱进行登陆</h2>
-        <p font-300 text='#999' pt-8px pb-16px>如果懒得获取验证码 你可以使用<code>123456</code></p>
-        <button m-btn>登陆</button>
+        <form flex flex-col>
+          <div form-item-sing-in>
+            <Icon className='w-24px h-24px' name='menu' />
+            <input type='email' autoComplete="off" placeholder='请输入邮箱' w-full input-sign-in />
+          </div>
+          <div pt-16px form-item-sing-in>
+            <Icon className='w-24px h-24px' name='menu' />
+            <input type="text" maxLength={6} autoComplete="off" placeholder='输入验证码' input-sign-in />
+            <button send-code>发送验证码</button>
+          </div>
+        </form>
+        <button mt-64px m-btn>登陆</button>
       </div>
-      <img className='w-100%' src={bottom} />
+      <img className='fixed bottom--32px left-0 w-100%' src={bottom} z="[calc(var(--z-menu)-1)]" />
     </div>
   )
 }

@@ -18,6 +18,8 @@ declare module 'react' {
     z?: string
     block?: boolean
     my?: string
+    b?: string
+    transition?: string
   }
   interface SVGProps<T> extends SVGAttributes<T>, ClassAttributes<T> {
     w?: string
