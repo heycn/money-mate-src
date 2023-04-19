@@ -6,10 +6,9 @@ import { Icon } from '../components/Icon'
 interface Props {
   title?: string
 }
-const property = {
-  email: { placeholder: '请输入邮箱', type: 'email', autoComplete: "off" },
-  code: { type: 'text', maxLength: 6, autoComplete: "off", placeholder: '输入验证码' }
-}
+const emailConfig = { placeholder: '请输入邮箱', type: 'email', autoComplete: "off" }
+const codeConfig = { type: 'text', maxLength: 6, autoComplete: "off", placeholder: '输入验证码' }
+
 export const SignInPage: React.FC<Props> = props => {
   useTitle(props?.title)
 
@@ -23,11 +22,11 @@ export const SignInPage: React.FC<Props> = props => {
         <form flex flex-col>
           <div form-item-sing-in>
             <Icon className='w-24px h-24px' name='menu' />
-            <input {...property.email} w-full input-sign-in />
+            <input {...emailConfig} w-full input-sign-in />
           </div>
-          <div {...property.code} pt-16px form-item-sing-in>
+          <div pt-16px form-item-sing-in>
             <Icon className='w-24px h-24px' name='menu' />
-            <input input-sign-in />
+            <input {...codeConfig} input-sign-in />
             <button send-code>发送验证码</button>
           </div>
         </form>
