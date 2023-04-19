@@ -2,9 +2,11 @@ import logo from '../assets/images/logo.svg'
 import { useTitle } from '../hooks/useTitle'
 import bottom from '../assets/images/bottom.svg'
 import { Icon } from '../components/Icon'
-import { validate } from '../lib/validate'
+import { hasError, validate } from '../lib/validate'
 import { useSignInStore } from '../stores/useSignInStore'
 import { FormEventHandler } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { ajax } from '../lib/ajax'
 
 interface Props {
   title?: string
@@ -14,7 +16,8 @@ const codeConfig = { type: 'text', maxLength: 6, autoComplete: "off", placeholde
 
 export const SignInPage: React.FC<Props> = props => {
   const { data, error, setData, setError } = useSignInStore()
-  const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+  const nav = useNavigate()
+  const onSubmit: FormEventHandler<HTMLFormElement> = async e => {
     e.preventDefault()
     const error = validate(data, [
       { key: 'email', type: 'required', message: '没输入邮箱地址!' },
@@ -23,6 +26,12 @@ export const SignInPage: React.FC<Props> = props => {
       { key: 'code', type: 'length', min: 6, max: 6, message: '验证码必须是6位!' }
     ])
     setError(error)
+    if (!hasError(error)) {
+      await ajax.post('/api/v1/session', data)
+      // TODO
+      // 保存 JWT 作为登录凭证
+      nav('/home', { replace: true })
+    }
   }
 
   useTitle(props?.title)
