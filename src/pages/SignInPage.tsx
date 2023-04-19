@@ -2,20 +2,27 @@ import logo from '../assets/images/logo.svg'
 import { useTitle } from '../hooks/useTitle'
 import bottom from '../assets/images/bottom.svg'
 import { Icon } from '../components/Icon'
+import { validate } from '../lib/validate'
 import { useSignInStore } from '../stores/useSignInStore'
 import { FormEventHandler } from 'react'
 
 interface Props {
   title?: string
 }
-const emailConfig = { placeholder: '请输入邮箱', type: 'email', autoComplete: "off" }
+const emailConfig = { placeholder: '请输入邮箱', type: 'text', autoComplete: "off" }
 const codeConfig = { type: 'text', maxLength: 6, autoComplete: "off", placeholder: '输入验证码' }
 
 export const SignInPage: React.FC<Props> = props => {
-  const { data, setData } = useSignInStore()
+  const { data, error, setData, setError } = useSignInStore()
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault()
-    console.log(data)
+    const error = validate(data, [
+      { key: 'email', type: 'required', message: '没输入邮箱地址!' },
+      { key: 'email', type: 'pattern', regex: /^.+@.+$/, message: '邮箱格式不正确!' },
+      { key: 'code', type: 'required', message: '没输入验证码!' },
+      { key: 'code', type: 'length', min: 6, max: 6, message: '验证码必须是6位!' }
+    ])
+    setError(error)
   }
 
   useTitle(props?.title)
@@ -34,13 +41,15 @@ export const SignInPage: React.FC<Props> = props => {
               value={data.email} onChange={e => setData({ email: e.target.value })}
             />
           </div>
-          <div pt-16px form-item-sing-in>
+          <p pl-34px pt-6px text-red>{error.email?.[0] || "　"}</p>
+          <div form-item-sing-in>
             <Icon className='w-24px h-24px' name='menu' />
             <input {...codeConfig} input-sign-in
               value={data.code} onChange={e => setData({ code: e.target.value })}
             />
             <button send-code>发送验证码</button>
           </div>
+          <p pl-34px pt-6px text-red>{error.code?.[0] || "　"}</p>
           <button mt-64px m-btn type='submit'>登录</button>
         </form>
       </div>
