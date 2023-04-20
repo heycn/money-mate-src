@@ -76,7 +76,7 @@ export const WelcomeLayout: React.FC = () => {
           <h1 text='#5db29e' >Money Mate</h1>
         </div>
       </header>
-      <main shrink-1 grow-1 relative w-full overflow-hidden ref={swipeDiv}>
+      <main shrink-1 grow-1 relative w-full mb-164px overflow-hidden ref={swipeDiv}>
         {transitions((style, pathName) =>
           <animated.div key={pathName} style={{ ...style, ...extraStyle }}
             flex justify-center items-center w="100%" h="100%">
@@ -84,7 +84,7 @@ export const WelcomeLayout: React.FC = () => {
           </animated.div>
         )}
       </main>
-      <footer h="1/7" shrink-0 text-center text-24px >
+      <footer fixed bottom-0 left-0 h="1/7" w-screen text-center text-24px >
         <Link to={nextLinkMap[location.pathname]} replace>下一页</Link>
       </footer>
     </div>
