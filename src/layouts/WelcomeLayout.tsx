@@ -67,9 +67,11 @@ export const WelcomeLayout: React.FC = () => {
 
   return (
     <div h-screen flex flex-col items-stretch bg='#ebf5f6' bg-gradient='to-br from-#addcd4'>
-      <header shrink-0 mb-32px >
+      <header shrink-0 mb-32px>
         <p align-revert flex justify-end p-32px>
-          <Link to="/home" replace onClick={onSkip}>跳过</Link>
+          <Link to="/home" replace onClick={onSkip} rounded-18px b-1 px-8px py-4px text='#0000003a'>
+            跳过并不再显示
+          </Link>
         </p>
         <div text-center>
           <img src={logo} h-40px />
@@ -84,8 +86,10 @@ export const WelcomeLayout: React.FC = () => {
           </animated.div>
         )}
       </main>
-      <footer fixed bottom-0 left-0 h="1/7" w-screen text-center text-24px >
-        <Link to={nextLinkMap[location.pathname]} replace>下一页</Link>
+      <footer fixed bottom-0 left-0 h="1/7" w-screen text-center text-24px>
+        <Link to={nextLinkMap[location.pathname]} replace rounded-32px text='#73b19f'>
+          {((location.pathname !== '/welcome/4') && '下一页') || '去记账'}
+        </Link>
       </footer>
     </div>
   )
