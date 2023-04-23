@@ -13,6 +13,9 @@ export default defineConfig({
     'send-code': 'bg-light b-#2fac92 b-1 rounded-8 py-6px px-3 color-#2fac92'
   },
   safelist: [],
+  rules: [
+    ['h-screen', { height: 'calc(100vh - var(--vh-offset, 0px))' }]
+  ],
   presets: [
     presetUno(),
     presetAttributify(),
