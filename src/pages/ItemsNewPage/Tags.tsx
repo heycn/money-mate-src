@@ -5,7 +5,7 @@ type Props = {
 }
 
 export const Tags: React.FC<Props> = () => {
-  const tags = Array.from({ length: 10 })
+  const tags = Array.from({ length: 99 })
 
   return (
     <ol grid grid-cols="[repeat(auto-fit,48px)]"

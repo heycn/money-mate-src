@@ -3,6 +3,7 @@ import { Gradient } from "../components/Gradient"
 import { Tabs } from "../components/Tabs"
 import { TopNav } from "../components/TopNav"
 import { Tags } from "./ItemsNewPage/Tags"
+import { DateAndAmount } from "./ItemsNewPage/DateAndAmount"
 
 export const ItemsNewPage: React.FC = () => {
   const tabItems: { key: Item['kind']; text: string, element?: ReactNode }[] = [
@@ -12,8 +13,8 @@ export const ItemsNewPage: React.FC = () => {
   const [currentItemKind, setCurrentItemKind] = useState<Item['kind']>('expense')
 
   return (
-    <>
-      <Gradient>
+    <div h-screen flex flex-col>
+      <Gradient grow-0 shrink-0>
         <TopNav title="记一笔" icon='back' />
         <Tabs
           tabItems={tabItems}
@@ -22,7 +23,10 @@ export const ItemsNewPage: React.FC = () => {
           className="children-flex-1 text-center"
         />
       </Gradient>
-      {tabItems.find(item => item.key === currentItemKind)?.element}
-    </>
+      <div grow-1 shrink-1 overflow-auto>
+        {tabItems.find(item => item.key === currentItemKind)?.element}
+      </div>
+      <DateAndAmount grow-0 shrink-0 />
+    </div>
   )
 }
