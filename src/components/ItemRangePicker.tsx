@@ -1,4 +1,4 @@
-import s from './TimeRangePicker.module.scss'
+import { Tabs } from './Tabs';
 
 export type TimeRange = 'thisMonth' | 'lastMonth' | 'thisYear' | 'custom'
 interface Props {
@@ -13,14 +13,6 @@ const timeRanges: { key: TimeRange; text: string }[] = [
 ]
 export const ItemRangePicker: React.FC<Props> = ({ currentTimeRange, onChange }) => {
   return (
-    <ol flex text='#798196' children-p-12px text-16px cursor-pointer gap-8px overflow-scroll>
-      {timeRanges.map(({ key, text }) => (
-        <li key={key} onClick={() => onChange(key)}
-          className={key === currentTimeRange ? s.selected : ''}
-        >
-          {text}
-        </li>
-      ))}
-    </ol>
+    <Tabs tabItems={timeRanges} value={currentTimeRange} onChange={onChange} />
   )
 }
