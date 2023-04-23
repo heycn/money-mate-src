@@ -7,8 +7,8 @@ type ItemKind = 'income' | 'expense'
 
 export const ItemsNewPage: React.FC = () => {
   const tabItems: { key: ItemKind; text: string }[] = [
-    { key: 'income', text: '收入' },
     { key: 'expense', text: '支出' },
+    { key: 'income', text: '收入' }
   ]
   const [currentItemKind, setCurrentItemKind] = useState<ItemKind>('expense')
 
