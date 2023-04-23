@@ -22,9 +22,7 @@ export const ItemsNewPage: React.FC = () => {
           className="children-flex-1 text-center"
         />
       </Gradient>
-      <ol>
-        {tabItems.find(item => item.key === currentItemKind)?.element}
-      </ol>
+      {tabItems.find(item => item.key === currentItemKind)?.element}
     </>
   )
 }
