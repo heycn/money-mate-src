@@ -16,8 +16,8 @@ export const Tags: React.FC<Props> = () => {
       >
         <Icon name="add" />
       </li>
-      {tags.map(() =>
-        <li flex justify-center items-center flex-col>
+      {tags.map((item, idx) =>
+        <li key={idx} flex justify-center items-center flex-col>
           <div b-2 b='#77B4A2' bg-white rounded='50%'
             w-56px h-56px flex justify-center items-center text-26px
           >
