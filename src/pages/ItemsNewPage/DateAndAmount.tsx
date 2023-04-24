@@ -1,7 +1,7 @@
 import { ReactNode, useState } from 'react'
 import { Icon } from '../../components/Icon';
 import styled from 'styled-components';
-import { Popup } from '../../components/Popup';
+import { usePopup } from '../../hooks/usePopup';
 
 type Props = {
   className?: string
@@ -41,34 +41,34 @@ const keysMap: { k: KeyboardKeys; v: ReactNode; area: string }[] = [
 
 export const DateAndAmount: React.FC<Props> = (props) => {
   const { className } = props
-  const [visible, setVisible] = useState(false)
+  const { toggle, popup } = usePopup()
 
   return (
     <>
+      {popup}
       <div className={className}>
         <div flex p-t-15px p-b-16px px-16px border-t-1px border-t="#ddd" items-center>
-          <span flex items-center gap-x-8px onClick={() => setVisible(!visible)} >
+          <span flex items-center gap-x-8px onClick={toggle} >
             <Icon name="calendar" className="w-20px h-20px grow-0 shrink-0" />
             <span grow-0 shrink-0 text-14px>2001-02-03</span>
           </span>
           <code grow-1 shrink-1 text-right text-20px color-black>123456789.01</code>
         </div>
         <div grid grid-rows='[repeat(4,56px)]' grid-cols-4 gap-1px bg='#00000006'> {keysMap.map(({ k, v, area }) => (
-            <Button
-              type='button'
-              key={k}
-              area={area}
-              onClick={() => { }}
-            >
-              {v}
-            </Button>
-          ))}
+          <Button
+            type='button'
+            key={k}
+            area={area}
+            onClick={() => { }}
+          >
+            {v}
+          </Button>
+        ))}
           <Button type='submit' area='2 / 4 / 5 / 5' font='18px' primary>
             提交
           </Button>
         </div>
       </div>
-      <Popup visible={visible} onClickMask={() => setVisible(false)} />
     </>
   )
 }
