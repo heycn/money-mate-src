@@ -40,9 +40,16 @@ const keysMap: { k: KeyboardKeys; v: ReactNode; area: string }[] = [
 
 export const DateAndAmount: React.FC<Props> = (props) => {
   const { className } = props
-  const [x, setX] = useState('')
+
   return (
     <div className={className}>
+
+      <div flex p-t-15px p-b-16px px-16px border-t-1px border-t="#ddd" gap-x-8px items-center>
+        <Icon name="calendar" className="w-20px h-20px grow-0 shrink-0" />
+        <span grow-0 shrink-0 text-14px>2001-02-03</span>
+        <code grow-1 shrink-1 text-right text-20px color-black>123456789.01</code>
+      </div>
+
       <div grid grid-rows='[repeat(4,56px)]' grid-cols-4 gap-1px bg='#00000006'>
         {keysMap.map(({ k, v, area }) => (
           <Button
