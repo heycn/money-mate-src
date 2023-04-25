@@ -42,7 +42,7 @@ const keysMap: { k: KeyboardKeys; v: ReactNode; area: string }[] = [
 
 export const DateAndAmount: React.FC<Props> = (props) => {
   const { className } = props
-  const { toggle, popup } = usePopup(true, <Datepicker />)
+  const { toggle, popup } = usePopup(true, <Datepicker onChange={d => console.log(d.toLocaleString())} />)
 
   return (
     <>
