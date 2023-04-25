@@ -34,8 +34,8 @@ export const EmojiInput: React.FC<Props> = ({ value, onChange }) => {
           >
             {chars.map(char =>
               <span
+                key={char} className={char === value ? s.selected : ''}
                 b-1 b-transparent rounded-8px
-                className={char === value ? s.selected : ''}
                 onClick={() => value !== char && onChange?.(char)}
               >
                 {char}
