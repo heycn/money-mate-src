@@ -3,6 +3,7 @@
   --z-menu: 256;
   --z-dialog: 512;
   --z-popup: 1024;
+  --primary-color: #73b19f
 }
 
 * {
@@ -69,4 +70,6 @@ input {
   outline: none;
 }
 
-code{font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}

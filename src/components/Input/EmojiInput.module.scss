@@ -1,0 +1,12 @@
+// 此 wrapper 是为了增加 css 的权重，如果不加 unocss 将会比此权重更高
+.wrapper {
+  .selected {
+    border-color: var(--primary-color);
+    background: #0001;
+  }
+}
+
+.selectedTag {
+  color: var(--primary-color);
+  border-bottom: 1px solid var(--primary-color);
+}
