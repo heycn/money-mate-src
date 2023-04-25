@@ -15,13 +15,14 @@ export const TagsNewPage: React.FC = () => {
       </Gradient>
       <form onSubmit={onSubmit} px-16px py-32px flex flex-col gap-y-8px>
         <div flex flex-col gap-y-8px>
-          <span text-18px>标签名</span>
-          <input j-input-text />
+          <input className=" bg-#00000009 focus:bg-#00000004 focus:b-1 focus:b-solid focus:b-#73b19f placeholder-color-#0003"
+            text-center b-1 b-transparent p-y-4px p-l-12px min-h-48px leading-24px text-16px font-bold w-full rounded-8px
+            type="text" placeholder="请输入标签名" color="#303133"
+          />
           <span text-red text-12px>标签名太长</span>
         </div>
         <div flex flex-col gap-y-8px>
-          <span text-18px>符号 <span text-24px>😀</span></span>
-          <div b-1 b="#5C33BE" rounded-8px>
+          <div b-1 b="#73b19f" rounded-8px>
             <div flex p-8px gap-x-16px overflow-auto text="#999">
               {emojis.map(emoji =>
                 <span whitespace-nowrap key={emoji.name}
@@ -41,7 +42,7 @@ export const TagsNewPage: React.FC = () => {
         </div>
         <p text-center py-24px>记账时长按标签，即可进行编辑</p>
         <div>
-          <button j-btn>确定</button>
+          <button m-btn>确定</button>
         </div>
       </form>
     </div>
