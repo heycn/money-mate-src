@@ -43,6 +43,14 @@ const keysMap: { k: KeyboardKeys; v: ReactNode; area: string }[] = [
 
 export const DateAndAmount: React.FC<Props> = (props) => {
   const [date, setDate] = useState(new Date())
+  const [output, _setOutput] = useState('0')
+  // 拦截器
+  const setOutput = (str: string) => {
+    const dotIndex = str.indexOf('.')
+    if (dotIndex >= 0 && str.length - dotIndex > 3) { return }
+    if (str.length > 16) { return }
+    _setOutput(str)
+  }
   const { className } = props
   const { toggle, popup, hide } = usePopup(false,
     <Datepicker
@@ -53,6 +61,25 @@ export const DateAndAmount: React.FC<Props> = (props) => {
       onCancel={() => hide()}
     />)
 
+  const append = (char: string) => {
+    console.log(111)
+    switch (char) {
+      case '0':
+        if (output !== '0') { setOutput(output + char) }
+        break
+      case '.':
+        if (!output.includes('.')) { setOutput(output + char) }
+        break
+      case 'backspace':
+        setOutput(output.slice(0, -1))
+        break
+      default:
+        if (output === '0') { setOutput(char) }
+        else { setOutput(output + char) }
+        break
+    }
+  }
+
   return (
     <>
       {popup}
@@ -62,14 +89,14 @@ export const DateAndAmount: React.FC<Props> = (props) => {
             <Icon name="calendar" className="w-20px h-20px grow-0 shrink-0" />
             <span grow-0 shrink-0>{time(date).format()}</span>
           </span>
-          <code grow-1 shrink-1 text-right text-20px color-black>123456789.01</code>
+          <code grow-1 shrink-1 text-right text-20px color-black>{output}</code>
         </div>
         <div grid grid-rows='[repeat(4,56px)]' grid-cols-4 gap-1px bg='#00000006'> {keysMap.map(({ k, v, area }) => (
           <Button
             type='button'
             key={k}
             area={area}
-            onClick={() => { }}
+            onClick={() => append(k)}
           >
             {v}
           </Button>
