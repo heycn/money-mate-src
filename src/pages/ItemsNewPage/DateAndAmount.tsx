@@ -3,6 +3,7 @@ import { Icon } from '../../components/Icon';
 import styled from 'styled-components';
 import { usePopup } from '../../hooks/usePopup';
 import { Datepicker } from '../../components/Datepicker';
+import { time } from '../../lib/time';
 
 type Props = {
   className?: string
@@ -41,11 +42,12 @@ const keysMap: { k: KeyboardKeys; v: ReactNode; area: string }[] = [
 ]
 
 export const DateAndAmount: React.FC<Props> = (props) => {
+  const [date, setDate] = useState(new Date())
   const { className } = props
-  const { toggle, popup, hide } = usePopup(true,
+  const { toggle, popup, hide } = usePopup(false,
     <Datepicker
       onConfirm={d => {
-        console.log(d.toLocaleString())
+        setDate(d)
         hide()
       }}
       onCancel={() => hide()}
@@ -58,7 +60,7 @@ export const DateAndAmount: React.FC<Props> = (props) => {
         <div flex p-t-15px p-b-16px px-16px border-t-1px border-t="#ddd" items-center>
           <span flex items-center gap-x-8px onClick={toggle} >
             <Icon name="calendar" className="w-20px h-20px grow-0 shrink-0" />
-            <span grow-0 shrink-0 text-14px>2001-02-03</span>
+            <span grow-0 shrink-0>{time(date).format()}</span>
           </span>
           <code grow-1 shrink-1 text-right text-20px color-black>123456789.01</code>
         </div>
