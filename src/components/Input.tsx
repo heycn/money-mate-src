@@ -1,6 +1,7 @@
 import { Data } from "../lib/validate"
 import { Icon } from "./Icon"
 import { EmojiInput } from "./Input/EmojiInput"
+import { SmsCodeInput } from "./Input/SmsCodeInput"
 
 type Props = {
   placeholder?: string
@@ -16,7 +17,6 @@ type Props = {
   )
 
 const emailConfig = { placeholder: '请输入邮箱', type: 'text', autoComplete: "off" }
-const codeConfig = { type: 'text', maxLength: 6, autoComplete: "off", placeholder: '输入验证码' }
 
 export const Input: React.FC<Props> = props => {
   const { placeholder, error, value, onChange } = props
@@ -55,18 +55,12 @@ export const Input: React.FC<Props> = props => {
               onChange={e => onChange?.(e.target.value)}
             />
           </div>
-          <p pl-34px pt-6px text-red>{error || '　'}</p>
+          <p pl-34px text-red>{error || '　'}</p>
         </>
       case 'sms_code':
         return <>
-          <div form-item-sing-in>
-            <Icon className='w-24px h-24px' name='menu' />
-            <input {...codeConfig} input-sign-in
-              value={value} onChange={e => onChange?.(e.target.value)}
-            />
-            <button type="button" send-code onClick={props.onClick}>发送验证码</button>
-          </div>
-          <p pl-34px pt-6px text-red>{error || '　'}</p>
+          <SmsCodeInput value={value} onChange={onChange} onClick={props.onClick} />
+          <p pl-34px text-red>{error || '　'}</p>
         </>
       default:
         return null
