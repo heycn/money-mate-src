@@ -1,20 +1,19 @@
 import logo from '../assets/images/logo.svg'
 import { useTitle } from '../hooks/useTitle'
 import bottom from '../assets/images/bottom.svg'
-import { Icon } from '../components/Icon'
 import { hasError, validate } from '../lib/validate'
 import { useSignInStore } from '../stores/useSignInStore'
 import { FormEventHandler } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ajax } from '../lib/ajax'
+import { Input } from '../components/Input'
 
 interface Props {
   title?: string
 }
-const emailConfig = { placeholder: '请输入邮箱', type: 'text', autoComplete: "off" }
-const codeConfig = { type: 'text', maxLength: 6, autoComplete: "off", placeholder: '输入验证码' }
 
 export const SignInPage: React.FC<Props> = props => {
+  useTitle(props?.title)
   const { data, error, setData, setError } = useSignInStore()
   const nav = useNavigate()
   const onSubmit: FormEventHandler<HTMLFormElement> = async e => {
@@ -33,8 +32,19 @@ export const SignInPage: React.FC<Props> = props => {
       nav('/home', { replace: true })
     }
   }
-
-  useTitle(props?.title)
+  const onClickCode = () => {
+    const newError = validate({ email: data.email }, [
+      { key: 'email', type: 'required', message: '没输入邮箱地址!' },
+      { key: 'email', type: 'pattern', regex: /^.+@.+$/, message: '邮箱格式不正确!' }
+    ])
+    setError(newError)
+    if (hasError(newError)) {
+      console.log('有错')
+    } else {
+      console.log('没错')
+      // 请求
+    }
+  }
 
   return (
     <div fixed left-0 top-0 w-screen h-screen flex flex-col justify-between bg='#f6f6f6'>
@@ -44,21 +54,19 @@ export const SignInPage: React.FC<Props> = props => {
           <h2 pt-16px text-22px text='#5eb39e'>登录 MoneyMate</h2>
         </div>
         <form flex flex-col onSubmit={onSubmit}>
-          <div form-item-sing-in>
-            <Icon className='w-24px h-24px' name='menu' />
-            <input {...emailConfig} w-full input-sign-in
-              value={data.email} onChange={e => setData({ email: e.target.value })}
-            />
-          </div>
-          <p pl-34px pt-6px text-red>{error.email?.[0]}</p>
-          <div form-item-sing-in>
-            <Icon className='w-24px h-24px' name='menu' />
-            <input {...codeConfig} input-sign-in
-              value={data.code} onChange={e => setData({ code: e.target.value })}
-            />
-            <button send-code>发送验证码</button>
-          </div>
-          <p pl-34px pt-6px text-red>{error.code?.[0]}</p>
+          <Input
+            type="email"
+            value={data.email}
+            onChange={email => setData({ email })}
+            error={error.email?.[0]}
+          />
+          <Input
+            type="sms_code"
+            value={data.code}
+            onChange={code => setData({ code })}
+            onClick={onClickCode}
+            error={error.code?.[0]}
+          />
           <button mt-64px m-btn type='submit'>登录</button>
         </form>
       </div>
