@@ -78,7 +78,6 @@ export const StatisticsPage: React.FC<Props> = ({ title }) => {
             ]}
             value={x}
             onChange={value => setX(value)}
-            disabledError
           />
         </div>
       </div>
