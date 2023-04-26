@@ -4,12 +4,18 @@ type Props = {
   value?: string
   placeholder?: string
   onChange?: (value: string) => void
-  onClick?: () => void
+  request?: () => Promise<unknown>
 }
 const codeConfig = { type: 'text', maxLength: 6, autoComplete: "off", placeholder: '输入验证码' }
 
 export const SmsCodeInput: React.FC<Props> = props => {
-  const { value, onChange, onClick } = props
+  const { value, onChange, request } = props
+  const onClick = async () => {
+    if (!request) { return }
+    await request()
+    // 开始倒计时
+  }
+
   return (
     <div form-item-sing-in>
       <Icon className='w-24px h-24px' name='menu' />

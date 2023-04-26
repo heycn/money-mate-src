@@ -33,7 +33,7 @@ export const SignInPage: React.FC<Props> = props => {
       nav('/home', { replace: true })
     }
   }
-  const onClickCode = async () => {
+  const sendSmsCode = async () => {
     const newError = validate({ email: data.email }, [
       { key: 'email', type: 'required', message: '没输入邮箱地址!' },
       { key: 'email', type: 'pattern', regex: /^.+@.+$/, message: '邮箱格式不正确!' }
@@ -47,7 +47,7 @@ export const SignInPage: React.FC<Props> = props => {
       const response = await axios.post('https://mangosteen2.hunger-valley.com/api/v1/validation_codes', {
         email: data.email
       })
-      console.log(response)
+      return response
     }
   }
 
@@ -69,7 +69,7 @@ export const SignInPage: React.FC<Props> = props => {
             type="sms_code"
             value={data.code}
             onChange={code => setData({ code })}
-            onClick={onClickCode}
+            request={sendSmsCode}
             error={error.code?.[0]}
           />
           <button mt-64px m-btn type='submit'>登录</button>
