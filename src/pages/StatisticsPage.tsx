@@ -5,6 +5,7 @@ import { ItemRangePicker, TimeRange } from "../components/ItemRangePicker"
 import { TopNav } from "../components/TopNav"
 import { useTitle } from "../hooks/useTitle"
 import { LineChart } from "../components/LineChart"
+import { PieChart } from "../components/PieChart"
 
 type Props = {
   title?: string
@@ -46,6 +47,11 @@ export const StatisticsPage: React.FC<Props> = ({ title }) => {
     { date: '2000-01-29', value: 155000 },
     { date: '2000-01-31', value: 10000 },
   ].map(item => ({ x: item.date, y: item.value / 100 }))
+  const items2 = [
+    { tag: '吃饭', amount: 10000 },
+    { tag: '打车', amount: 20000 },
+    { tag: '买皮肤', amount: 68800 },
+  ].map(item => ({ x: item.tag, y: item.amount / 100 }))
 
   return (
     <div>
@@ -55,6 +61,7 @@ export const StatisticsPage: React.FC<Props> = ({ title }) => {
       </Gradient>
       <AddItemFloatButton />
       <LineChart className="h-120px" items={items} />
+      <PieChart className="h-260px" items={items2} />
     </div>
   )
 }
