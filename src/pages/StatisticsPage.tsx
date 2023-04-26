@@ -65,7 +65,7 @@ export const StatisticsPage: React.FC<Props> = ({ title }) => {
         <TopNav title={title} icon="back" />
         <ItemRangePicker currentTimeRange={currentTimeRange} onChange={setCurrentTimeRange} />
       </Gradient>
-      <AddItemFloatButton />
+      <LineChart className="h-120px" items={items} />
       <PieChart className="h-260px m-t-16px" items={items2} />
       <RankChart className="m-t-8px" items={items3} />
     </div>
