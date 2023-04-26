@@ -52,9 +52,9 @@ export const TagForm: React.FC<Props> = ({ type }) => {
           {data.sign}
         </div>
       </div>
-      <Input placeholder="请输入标签名" error={error.name?.[0] || '　'} value={data.name}
+      <Input type='text' placeholder="请输入标签名" error={error.name?.[0]} value={data.name}
         onChange={name => setData({ name })} />
-      <Input type="emoji" error={error.sign?.[0] || '　'} value={data.sign} onChange={sign => setData({ sign })} />
+      <Input type="emoji" error={error.sign?.[0]} value={data.sign} onChange={sign => setData({ sign })} />
       <p text-center text="#999">记账时长按标签，即可进行编辑</p>
       <button m-btn mt-24px>确定</button>
     </form>

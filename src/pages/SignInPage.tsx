@@ -50,7 +50,7 @@ export const SignInPage: React.FC<Props> = props => {
               value={data.email} onChange={e => setData({ email: e.target.value })}
             />
           </div>
-          <p pl-34px pt-6px text-red>{error.email?.[0] || "　"}</p>
+          <p pl-34px pt-6px text-red>{error.email?.[0]}</p>
           <div form-item-sing-in>
             <Icon className='w-24px h-24px' name='menu' />
             <input {...codeConfig} input-sign-in
@@ -58,7 +58,7 @@ export const SignInPage: React.FC<Props> = props => {
             />
             <button send-code>发送验证码</button>
           </div>
-          <p pl-34px pt-6px text-red>{error.code?.[0] || "　"}</p>
+          <p pl-34px pt-6px text-red>{error.code?.[0]}</p>
           <button mt-64px m-btn type='submit'>登录</button>
         </form>
       </div>

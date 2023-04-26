@@ -7,6 +7,7 @@ import { useTitle } from "../hooks/useTitle"
 import { LineChart } from "../components/LineChart"
 import { PieChart } from "../components/PieChart"
 import { RankChart } from "../components/RankChart"
+import { Input } from "../components/Input"
 
 type Props = {
   title?: string
@@ -14,6 +15,7 @@ type Props = {
 
 export const StatisticsPage: React.FC<Props> = ({ title }) => {
   const [currentTimeRange, setCurrentTimeRange] = useState<TimeRange>('thisMonth')
+  const [x, setX] = useState('expenses')
   useTitle(title)
 
   const items = [
@@ -65,6 +67,21 @@ export const StatisticsPage: React.FC<Props> = ({ title }) => {
         <TopNav title={title} icon="back" />
         <ItemRangePicker currentTimeRange={currentTimeRange} onChange={setCurrentTimeRange} />
       </Gradient>
+      <div flex p-16px items-center gap-x-16px>
+        <span grow-0 shrink-0>类型</span>
+        <div grow-1 shrink-1>
+          <Input
+            type="select"
+            options={[
+              { text: '支出', value: 'expenses' },
+              { text: '收入', value: 'income' }
+            ]}
+            value={x}
+            onChange={value => setX(value)}
+            disabledError
+          />
+        </div>
+      </div>
       <LineChart className="h-120px" items={items} />
       <PieChart className="h-260px m-t-16px" items={items2} />
       <RankChart className="m-t-8px" items={items3} />
