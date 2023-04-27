@@ -39,7 +39,6 @@ export const SignInPage: React.FC<Props> = props => {
         data
       ).catch(onSubmitError)
       const jwt = response.data.jwt
-      console.log('jwt', jwt)
       localStorage.setItem('jwt', jwt)
       nav('/home', { replace: true })
     }
