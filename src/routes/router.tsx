@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom'
-import { App } from '../App'
+import { Root } from '../components/Root'
 import { WelcomeLayout } from '../layouts/WelcomeLayout'
 import { Welcome1 } from '../pages/Welcome1'
 import { Welcome2 } from '../pages/Welcome2'
@@ -14,7 +14,7 @@ import { TagsEditPage } from '../pages/TagsEditPage'
 import { StatisticsPage } from '../pages/StatisticsPage'
 
 export const router = createBrowserRouter([
-  { path: '/', element: <App /> },
+  { path: '/', element: <Root /> },
   { path: '/home', element: <Home title='首页' /> },
   {
     path: '/welcome',
