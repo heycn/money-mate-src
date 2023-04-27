@@ -1,12 +1,14 @@
 import logo from '../assets/images/logo.svg'
 import { useTitle } from '../hooks/useTitle'
 import bottom from '../assets/images/bottom.svg'
+import type { FormError } from '../lib/validate'
 import { hasError, validate } from '../lib/validate'
 import { useSignInStore } from '../stores/useSignInStore'
 import { FormEventHandler } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ajax } from '../lib/ajax'
 import { Input } from '../components/Input'
+import type { AxiosError } from 'axios'
 import axios from 'axios'
 
 interface Props {
@@ -17,6 +19,11 @@ export const SignInPage: React.FC<Props> = props => {
   useTitle(props?.title)
   const { data, error, setData, setError } = useSignInStore()
   const nav = useNavigate()
+
+  const onSubmitError = (err: AxiosError<{ errors: FormError<typeof data> }>) => {
+    setError(err.response?.data?.errors ?? {})
+    throw error
+  }
   const onSubmit: FormEventHandler<HTMLFormElement> = async e => {
     e.preventDefault()
     const newError = validate(data, [
@@ -27,9 +34,13 @@ export const SignInPage: React.FC<Props> = props => {
     ])
     setError(newError)
     if (!hasError(newError)) {
-      await ajax.post('/api/v1/session', data)
-      // TODO
-      // 保存 JWT 作为登录凭证
+      const response = await ajax.post<{ jwt: string }>(
+        'https://mangosteen2.hunger-valley.com/api/v1/validation_codes',
+        data
+      ).catch(onSubmitError)
+      const jwt = response.data.jwt
+      console.log('jwt', jwt)
+      localStorage.setItem('jwt', jwt)
       nav('/home', { replace: true })
     }
   }
