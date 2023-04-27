@@ -14,8 +14,8 @@ export const SmsCodeInput: React.FC<Props> = ({ value, onChange, request }) => {
   const [seconds, setSeconds] = useCountDown(0)
 
   const onClick = async () => {
-    // if (!request) { return }
-    // await request()
+    if (!request) { return }
+    await request()
     setSeconds(3)
   }
 

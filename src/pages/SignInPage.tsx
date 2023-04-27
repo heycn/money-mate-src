@@ -10,6 +10,7 @@ import { ajax } from '../lib/ajax'
 import { Input } from '../components/Input'
 import type { AxiosError } from 'axios'
 import axios from 'axios'
+import { usePopup } from '../hooks/usePopup'
 
 interface Props {
   title?: string
@@ -19,6 +20,7 @@ export const SignInPage: React.FC<Props> = props => {
   useTitle(props?.title)
   const { data, error, setData, setError } = useSignInStore()
   const nav = useNavigate()
+  const { popup, hide, show } = usePopup({ children: <div>加载中</div>, position: 'center' })
 
   const onSubmitError = (err: AxiosError<{ errors: FormError<typeof data> }>) => {
     setError(err.response?.data?.errors ?? {})
@@ -49,20 +51,17 @@ export const SignInPage: React.FC<Props> = props => {
       { key: 'email', type: 'pattern', regex: /^.+@.+$/, message: '邮箱格式不正确!' }
     ])
     setError(newError)
-    if (hasError(newError)) {
-      console.log('有错')
-    } else {
-      console.log('没错')
-      // 请求
-      const response = await axios.post('https://mangosteen2.hunger-valley.com/api/v1/validation_codes', {
-        email: data.email
-      })
-      return response
-    }
+    if (hasError(newError)) { throw new Error('表单出错') }
+    show()
+    const response = await axios.post('https://mangosteen2.hunger-valley.com/api/v1/validation_codes', {
+      email: data.email
+    }).finally(() => { hide() })
+    return response
   }
 
   return (
     <div fixed left-0 top-0 w-screen h-screen flex flex-col justify-between bg='#f6f6f6'>
+      {popup}
       <div px-26px z="[calc(var(--z-menu))]">
         <div my='1/7' text-center>
           <img h-48px src={logo} />
