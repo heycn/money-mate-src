@@ -23,6 +23,7 @@ declare module 'react' {
     transition?: string
     absolute?: boolean
     top?: string
+    left?: string
   }
   interface SVGProps<T> extends SVGAttributes<T>, ClassAttributes<T> {
     w?: string

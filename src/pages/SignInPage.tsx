@@ -11,6 +11,8 @@ import { Input } from '../components/Input'
 import type { AxiosError } from 'axios'
 import axios from 'axios'
 import { usePopup } from '../hooks/usePopup'
+import styled from 'styled-components'
+import { Spin } from '../components/Spin'
 
 interface Props {
   title?: string
@@ -20,7 +22,12 @@ export const SignInPage: React.FC<Props> = props => {
   useTitle(props?.title)
   const { data, error, setData, setError } = useSignInStore()
   const nav = useNavigate()
-  const { popup, hide, show } = usePopup({ children: <div>加载中</div>, position: 'center' })
+  const { popup, hide, show } = usePopup({
+    children: <div p-16px>
+      <Spin />
+    </div>,
+    position: 'center'
+  })
 
   const onSubmitError = (err: AxiosError<{ errors: FormError<typeof data> }>) => {
     setError(err.response?.data?.errors ?? {})
