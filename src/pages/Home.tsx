@@ -1,20 +1,31 @@
 import logo from '../assets/images/logo.svg'
 import useSWR from 'swr'
 import { ajax } from '../lib/ajax'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { useTitle } from '../hooks/useTitle'
 import { Loading } from '../components/Loading'
 import { AddItemFloatButton } from '../components/AddItemFloatButton'
+import { AxiosError } from 'axios'
 
 interface Props {
   title?: string
 }
 export const Home: React.FC<Props> = props => {
   useTitle(props?.title)
-  const { data: meData, error: meError, isLoading: meLoading } = useSWR(
-    '/api/v1/me',
-    async path => (await ajax.get<Resource<User>>(path)).data.resource
-  )
+  const nav = useNavigate()
+  const onHttpError = (error: AxiosError) => {
+    if (error.response) {
+      if (error.response.status === 401) {
+        nav('/sign_in')
+      }
+    }
+    throw error
+  }
+  const { data: meData, error: meError, isLoading: meLoading } = useSWR('/api/v1/me', async path => {
+    // 如果返回 403 就让用户先登录
+    const response = await ajax.get<Resource<User>>(path).catch(onHttpError)
+    return response.data.resource
+  })
   const { data: itemsData, error: itemsError, isLoading: itemsLoading } = useSWR(
     meData ? '/api/v1/items' : null,
     async path => (await ajax.get<Resources<Item>>(path)).data
