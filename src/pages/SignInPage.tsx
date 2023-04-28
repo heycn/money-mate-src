@@ -6,7 +6,7 @@ import { hasError, validate } from '../lib/validate'
 import { useSignInStore } from '../stores/useSignInStore'
 import { FormEventHandler } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ajax, useAjax } from '../lib/ajax'
+import { useAjax } from '../lib/ajax'
 import { Input } from '../components/Input'
 import type { AxiosError } from 'axios'
 
@@ -34,7 +34,7 @@ export const SignInPage: React.FC<Props> = props => {
     ])
     setError(newError)
     if (!hasError(newError)) {
-      const response = await ajax.post<{ jwt: string }>(
+      const response = await post<{ jwt: string }>(
         'https://mangosteen2.hunger-valley.com/api/v1/validation_codes',
         data
       ).catch(onSubmitError)

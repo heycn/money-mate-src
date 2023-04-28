@@ -1,5 +1,5 @@
 import useSWRInfinite from 'swr/infinite'
-import { ajax } from '../../lib/ajax'
+import { useAjax } from '../../lib/ajax'
 import { Loading } from '../../components/Loading'
 
 const getKey = (pageIndex: number, prev: Resources<Item>) => {
@@ -20,9 +20,10 @@ const Tips: React.FC<{ text: string }> = ({ text }) => {
 }
 
 export const ItemsList: React.FC = () => {
+  const { get } = useAjax()
   const { data, error, size, setSize } = useSWRInfinite(
     getKey,
-    async path => (await ajax.get<Resources<Item>>(path)).data,
+    async path => (await get<Resources<Item>>(path)).data,
     { revalidateFirstPage: false }
   )
 
