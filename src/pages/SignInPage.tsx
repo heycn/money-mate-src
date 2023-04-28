@@ -6,13 +6,9 @@ import { hasError, validate } from '../lib/validate'
 import { useSignInStore } from '../stores/useSignInStore'
 import { FormEventHandler } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ajax } from '../lib/ajax'
+import { ajax, useAjax } from '../lib/ajax'
 import { Input } from '../components/Input'
 import type { AxiosError } from 'axios'
-import axios from 'axios'
-import { usePopup } from '../hooks/usePopup'
-import styled from 'styled-components'
-import { Spin } from '../components/Spin'
 
 interface Props {
   title?: string
@@ -22,12 +18,7 @@ export const SignInPage: React.FC<Props> = props => {
   useTitle(props?.title)
   const { data, error, setData, setError } = useSignInStore()
   const nav = useNavigate()
-  const { popup, hide, show } = usePopup({
-    children: <div p-16px>
-      <Spin />
-    </div>,
-    position: 'center'
-  })
+  const { post } = useAjax({ showLoading: true })
 
   const onSubmitError = (err: AxiosError<{ errors: FormError<typeof data> }>) => {
     setError(err.response?.data?.errors ?? {})
@@ -59,16 +50,15 @@ export const SignInPage: React.FC<Props> = props => {
     ])
     setError(newError)
     if (hasError(newError)) { throw new Error('表单出错') }
-    show()
-    const response = await axios.post('https://mangosteen2.hunger-valley.com/api/v1/validation_codes', {
-      email: data.email
-    }).finally(() => { hide() })
+    const response = await post(
+      'https://mangosteen2.hunger-valley.com/api/v1/validation_codes',
+      { email: data.email }
+    )
     return response
   }
 
   return (
     <div fixed left-0 top-0 w-screen h-screen flex flex-col justify-between bg='#f6f6f6'>
-      {popup}
       <div px-26px z="[calc(var(--z-menu))]">
         <div my='1/7' text-center>
           <img h-48px src={logo} />
