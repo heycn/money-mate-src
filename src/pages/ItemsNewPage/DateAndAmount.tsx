@@ -7,6 +7,7 @@ import { time } from '../../lib/time';
 
 type Props = {
   className?: string
+  itemDate: ReactNode
 }
 type KeyboardKeys =
   | '1'
@@ -42,7 +43,6 @@ const keysMap: { k: KeyboardKeys; v: ReactNode; area: string }[] = [
 ]
 
 export const DateAndAmount: React.FC<Props> = (props) => {
-  const [date, setDate] = useState(new Date())
   const [output, _setOutput] = useState('0')
   // 拦截器
   const setOutput = (str: string) => {
@@ -52,11 +52,6 @@ export const DateAndAmount: React.FC<Props> = (props) => {
     _setOutput(str)
   }
   const { className } = props
-  const { toggle, popup, hide } = usePopup({
-    children: <Datepicker
-      onConfirm={d => { setDate(d); hide() }}
-      onCancel={() => hide()} />
-  })
 
   const append = (char: string) => {
     console.log(111)
@@ -79,13 +74,9 @@ export const DateAndAmount: React.FC<Props> = (props) => {
 
   return (
     <>
-      {popup}
       <div className={className}>
         <div flex p-t-15px p-b-16px px-16px border-t-1px border-t="#ddd" items-center>
-          <span flex items-center gap-x-8px onClick={toggle} >
-            <Icon name="calendar" className="w-20px h-20px grow-0 shrink-0" />
-            <span grow-0 shrink-0>{time(date).format()}</span>
-          </span>
+          {props.itemDate}
           <code grow-1 shrink-1 text-right text-20px color-black>{output}</code>
         </div>
         <div grid grid-rows='[repeat(4,56px)]' grid-cols-4 gap-1px bg='#00000006'> {keysMap.map(({ k, v, area }) => (

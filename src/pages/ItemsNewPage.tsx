@@ -5,6 +5,7 @@ import { TopNav } from "../components/TopNav"
 import { useCreateItemStore } from '../stores/useCreateItemStore'
 import { Tags } from "./ItemsNewPage/Tags"
 import { DateAndAmount } from "./ItemsNewPage/DateAndAmount"
+import { ItemDate } from "./ItemsNewPage/ItemDate"
 
 export const ItemsNewPage: React.FC = () => {
   const { data, error, setData, setError } = useCreateItemStore()
@@ -35,7 +36,7 @@ export const ItemsNewPage: React.FC = () => {
       <div grow-1 shrink-1 overflow-auto>
         {tabItems.find(item => item.key === currentItemKind)?.element}
       </div>
-      <DateAndAmount grow-0 shrink-0 />
+      <DateAndAmount grow-0 shrink-0 itemDate={<ItemDate />} />
     </div>
   )
 }
