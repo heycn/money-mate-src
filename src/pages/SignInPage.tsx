@@ -5,10 +5,11 @@ import type { FormError } from '../lib/validate'
 import { hasError, validate } from '../lib/validate'
 import { useSignInStore } from '../stores/useSignInStore'
 import { FormEventHandler } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams, Link } from 'react-router-dom'
 import { useAjax } from '../lib/ajax'
 import { Input } from '../components/Input'
 import type { AxiosError } from 'axios'
+import { Icon } from '../components/Icon'
 
 interface Props {
   title?: string
@@ -24,6 +25,9 @@ export const SignInPage: React.FC<Props> = props => {
     setError(err.response?.data?.errors ?? {})
     throw error
   }
+  const [search] = useSearchParams()
+  const from = search.get('from') || '/items'
+  console.log(from)
   const onSubmit: FormEventHandler<HTMLFormElement> = async e => {
     e.preventDefault()
     const newError = validate(data, [
@@ -40,7 +44,7 @@ export const SignInPage: React.FC<Props> = props => {
       ).catch(onSubmitError)
       const jwt = response.data.jwt
       localStorage.setItem('jwt', jwt)
-      nav('/items', { replace: true })
+      nav(from, { replace: true })
     }
   }
   const sendSmsCode = async () => {
@@ -60,6 +64,12 @@ export const SignInPage: React.FC<Props> = props => {
   return (
     <div fixed left-0 top-0 w-screen h-screen flex flex-col justify-between bg='#f6f6f6'>
       <div px-26px z="[calc(var(--z-menu))]">
+        <header py-16px flex items-center text-18px color="#5eb39e">
+          <Link to={from} replace>
+            <Icon name='back' />
+          </Link>
+          <span ml-4px>返回</span>
+        </header>
         <div my='1/7' text-center>
           <img h-48px src={logo} />
           <h2 pt-16px text-22px text='#5eb39e'>登录 MoneyMate</h2>
