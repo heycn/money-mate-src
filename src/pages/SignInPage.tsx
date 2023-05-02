@@ -40,7 +40,7 @@ export const SignInPage: React.FC<Props> = props => {
       ).catch(onSubmitError)
       const jwt = response.data.jwt
       localStorage.setItem('jwt', jwt)
-      nav('/home', { replace: true })
+      nav('/items', { replace: true })
     }
   }
   const sendSmsCode = async () => {

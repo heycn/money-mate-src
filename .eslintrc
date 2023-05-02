@@ -7,6 +7,7 @@
         "@typescript-eslint/brace-style": "off",
         "vars": "local",
         "args": "none",
+        "symbol-description": "off",
         "ignoreRestSiblings": true,
         "caughtErrors": "none"
       }
