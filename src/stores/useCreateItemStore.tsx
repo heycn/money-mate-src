@@ -1,44 +1,43 @@
 import { create } from 'zustand'
-import type { Data, FormError } from '../lib/validate'
+import { time } from '../lib/time'
+import type { FormError } from '../lib/validate'
 
-type Date = Item
+type Data = Item
 
 type CreateItem = {
-  data: Partial<Date>
-  error: FormError<Date>
-  setData: (data: Partial<Date>) => void
-  setError: (error: Partial<FormError<Date>>) => void
+  data: Partial<Data>
+  error: FormError<Data>
+  setData: (data: Partial<Data>) => void
+  setError: (error: Partial<FormError<Data>>) => void
 }
-export const useCreateItemStore = create<CreateItem>(set => (
-  {
-    data: {
-      kind: 'expense',
-      tag_ids: [],
-      happen_at: '',
-      amount: 0
-    },
-    error: {
-      kind: [],
-      tag_ids: [],
-      happen_at: [],
-      amount: []
-    },
-    setData: (data: Partial<Data>) => {
-      set(state => ({
-        ...state,
-        data: {
-          ...state.data,
-          ...data
-        }
-      }))
-    },
-    setError: (error: Partial<FormError<Data>>) => {
-      set(state => ({
-        ...state,
-        error: {
-          ...error
-        }
-      }))
-    }
+export const useCreateItemStore = create<CreateItem>(set => ({
+  data: {
+    kind: 'expense',
+    tag_ids: [],
+    happen_at: time().format(),
+    amount: 0
+  },
+  error: {
+    kind: [],
+    tag_ids: [],
+    happen_at: [],
+    amount: []
+  },
+  setData: (data: Partial<Data>) => {
+    set(state => ({
+      ...state,
+      data: {
+        ...state.data,
+        ...data
+      }
+    }))
+  },
+  setError: (error: Partial<FormError<Data>>) => {
+    set(state => ({
+      ...state,
+      error: {
+        ...error
+      }
+    }))
   }
-))
+}))

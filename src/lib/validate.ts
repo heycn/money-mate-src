@@ -1,4 +1,3 @@
-// type JSONValue = string | number | boolean | null | { [k: string]: JSONValue } | JSONValue[]
 interface Data {
   [k: string]: JSONValue
 }
@@ -7,7 +6,10 @@ type Rule<T> = {
   message: string
 } & (
     { type: 'required' } |
+    { type: 'chinese' } |
+    { type: 'equalField'; field: keyof T } |
     { type: 'pattern'; regex: RegExp } |
+    { type: 'notEqual'; value: JSONValue } |
     { type: 'length'; min?: number; max?: number }
   )
 type Rules<T> = Rule<T>[]
@@ -35,6 +37,12 @@ export const validate = <T extends Data>(formData: T, rules: Rules<T>): FormErro
           error[key]?.push(message)
         }
         break
+      case 'notEqual':
+        if (!isEmpty(value) && value === rule.value) {
+          error[key] = error[key] ?? []
+          error[key]?.push(message)
+        }
+        break
       case 'length':
         if (!isEmpty(value)) {
           if (rule.min && value!.toString().length < rule.min) {
@@ -47,6 +55,18 @@ export const validate = <T extends Data>(formData: T, rules: Rules<T>): FormErro
           }
         }
         break
+      case 'chinese':
+        if (!isEmpty(value) && !/^[\u4E00-\u9FA5]+$/.test(value!.toString())) {
+          error[key] = error[key] ?? []
+          error[key]?.push(message)
+        }
+        break
+      case 'equalField':
+        if (!isEmpty(value) && value !== formData[rule.field]) {
+          error[key] = error[key] ?? []
+          error[key]?.push(message)
+        }
+        break
       default:
         break
     }
@@ -55,7 +75,10 @@ export const validate = <T extends Data>(formData: T, rules: Rules<T>): FormErro
 }
 
 function isEmpty(value: undefined | JSONValue | Data) {
-  return value === null || value === undefined || value === ''
+  return value === null
+    || value === undefined
+    || value === ''
+    || (Array.isArray(value) && value.length === 0)
 }
 
 export function hasError(errors?: Record<string, string[]>) {
