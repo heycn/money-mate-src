@@ -5,6 +5,8 @@ import styled from 'styled-components';
 type Props = {
   className?: string
   itemDate: ReactNode
+  value?: number
+  onChange?: (amount: number) => void
 }
 type KeyboardKeys =
   | '1'
@@ -40,18 +42,19 @@ const keysMap: { k: KeyboardKeys; v: ReactNode; area: string }[] = [
 ]
 
 export const ItemAmount: React.FC<Props> = (props) => {
-  const [output, _setOutput] = useState('0')
+  const { value, onChange } = props
+  const [output, _setOutput] = useState(() => value?.toString() ?? '0')
   // 拦截器
   const setOutput = (str: string) => {
     const dotIndex = str.indexOf('.')
     if (dotIndex >= 0 && str.length - dotIndex > 3) { return }
     if (str.length > 16) { return }
     _setOutput(str)
+    onChange?.(parseFloat(str))
   }
   const { className } = props
 
   const append = (char: string) => {
-    console.log(111)
     switch (char) {
       case '0':
         if (output !== '0') { setOutput(output + char) }
