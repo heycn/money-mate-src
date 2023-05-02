@@ -2,6 +2,7 @@ import { ReactNode, useState } from "react"
 import { Gradient } from "../components/Gradient"
 import { Tabs } from "../components/Tabs"
 import { TopNav } from "../components/TopNav"
+import { useCreateItemStore } from '../stores/useCreateItemStore'
 import { Tags } from "./ItemsNewPage/Tags"
 import { DateAndAmount } from "./ItemsNewPage/DateAndAmount"
 
@@ -11,6 +12,7 @@ export const ItemsNewPage: React.FC = () => {
     { key: 'income', text: '收入', element: <Tags kind='income' /> }
   ]
   const [currentItemKind, setCurrentItemKind] = useState<Item['kind']>('expense')
+  const { data, error, setData, setError } = useCreateItemStore()
 
   return (
     <div h-screen flex flex-col>
@@ -18,11 +20,12 @@ export const ItemsNewPage: React.FC = () => {
         <TopNav title="记一笔" icon='back' />
         <Tabs
           tabItems={tabItems}
-          value={currentItemKind}
-          onChange={setCurrentItemKind}
+          value={data.kind!}
+          onChange={(tabItem) => { setData({ kind: tabItem }) }}
           className="children-flex-1 text-center"
         />
       </Gradient>
+      <div text-28px>{JSON.stringify(data)}</div>
       <div grow-1 shrink-1 overflow-auto>
         {tabItems.find(item => item.key === currentItemKind)?.element}
       </div>
