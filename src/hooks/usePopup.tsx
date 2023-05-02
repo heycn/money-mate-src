@@ -13,7 +13,7 @@ export const usePopup = (options: Options) => {
   const { initVisible = false, children, position } = options
   const [visible, setVisible] = useState(initVisible)
   const popup = ReactDOM.createPortal(<Popup visible={visible} position={position} onClickMask={() => setVisible(false)} >
-    {children}
+    {visible && children}
   </Popup>, rootDiv)
   return {
     popup,
