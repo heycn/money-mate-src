@@ -1,9 +1,6 @@
 import { ReactNode, useState } from 'react'
 import { Icon } from '../../components/Icon';
 import styled from 'styled-components';
-import { usePopup } from '../../hooks/usePopup';
-import { Datepicker } from '../../components/Datepicker';
-import { time } from '../../lib/time';
 
 type Props = {
   className?: string
@@ -42,7 +39,7 @@ const keysMap: { k: KeyboardKeys; v: ReactNode; area: string }[] = [
   }
 ]
 
-export const DateAndAmount: React.FC<Props> = (props) => {
+export const ItemAmount: React.FC<Props> = (props) => {
   const [output, _setOutput] = useState('0')
   // 拦截器
   const setOutput = (str: string) => {
