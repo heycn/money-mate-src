@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react"
+import { FormEventHandler, ReactNode, useState } from "react"
 import { Gradient } from "../components/Gradient"
 import { Tabs } from "../components/Tabs"
 import { TopNav } from "../components/TopNav"
@@ -9,7 +9,7 @@ import { ItemDate } from "./ItemsNewPage/ItemDate"
 
 export const ItemsNewPage: React.FC = () => {
   const { data, error, setData, setError } = useCreateItemStore()
-  const tabItems: { key: Item['kind']; text: string, element?: ReactNode }[] = [
+  const tabItems: { key: Item['kind']; text: string; element?: ReactNode }[] = [
     {
       key: 'expense', text: '支出',
       element: <Tags kind="expense" value={data.tag_ids} onChange={(ids) => setData({ tag_ids: ids })} />
@@ -19,10 +19,13 @@ export const ItemsNewPage: React.FC = () => {
       element: <Tags kind="income" value={data.tag_ids} onChange={(ids) => setData({ tag_ids: ids })} />
     }
   ]
-  const [currentItemKind, setCurrentItemKind] = useState<Item['kind']>('expense')
+  const onSubmit = () => {
+    console.log('你要提交是吧')
+  }
+  const [currentItemKind] = useState<Item['kind']>('expense')
 
   return (
-    <div h-screen flex flex-col>
+    <div h-screen flex flex-col onSubmit={onSubmit}>
       <Gradient grow-0 shrink-0>
         <TopNav title="记一笔" icon='back' />
         <Tabs
@@ -39,6 +42,7 @@ export const ItemsNewPage: React.FC = () => {
       <ItemAmount grow-0 shrink-0
         itemDate={<ItemDate value={data.happen_at} onChange={(happen_at) => setData({ happen_at })} />}
         value={data.amount} onChange={amount => setData({ amount })}
+        onSubmit={onSubmit}
       />
     </div>
   )

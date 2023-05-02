@@ -7,6 +7,7 @@ type Props = {
   itemDate: ReactNode
   value?: number
   onChange?: (amount: number) => void
+  onSubmit?: () => void
 }
 type KeyboardKeys =
   | '1'
@@ -42,7 +43,7 @@ const keysMap: { k: KeyboardKeys; v: ReactNode; area: string }[] = [
 ]
 
 export const ItemAmount: React.FC<Props> = (props) => {
-  const { value, onChange } = props
+  const { value, onChange, onSubmit } = props
   const [output, _setOutput] = useState(() => value?.toString() ?? '0')
   // 拦截器
   const setOutput = (str: string) => {
@@ -89,7 +90,7 @@ export const ItemAmount: React.FC<Props> = (props) => {
             {v}
           </Button>
         ))}
-          <Button type='submit' area='2 / 4 / 5 / 5' font='18px' primary>
+          <Button type='submit' area='2 / 4 / 5 / 5' font='18px' primary onClick={onSubmit}>
             提交
           </Button>
         </div>
