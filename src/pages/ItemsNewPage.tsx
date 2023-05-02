@@ -7,12 +7,18 @@ import { Tags } from "./ItemsNewPage/Tags"
 import { DateAndAmount } from "./ItemsNewPage/DateAndAmount"
 
 export const ItemsNewPage: React.FC = () => {
+  const { data, error, setData, setError } = useCreateItemStore()
   const tabItems: { key: Item['kind']; text: string, element?: ReactNode }[] = [
-    { key: 'expense', text: '支出', element: <Tags kind='expense' /> },
-    { key: 'income', text: '收入', element: <Tags kind='income' /> }
+    {
+      key: 'expense', text: '支出',
+      element: <Tags kind="expense" value={data.tag_ids} onChange={(ids) => setData({ tag_ids: ids })} />
+    },
+    {
+      key: 'income', text: '收入',
+      element: <Tags kind="income" value={data.tag_ids} onChange={(ids) => setData({ tag_ids: ids })} />
+    }
   ]
   const [currentItemKind, setCurrentItemKind] = useState<Item['kind']>('expense')
-  const { data, error, setData, setError } = useCreateItemStore()
 
   return (
     <div h-screen flex flex-col>
