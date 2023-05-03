@@ -3,6 +3,7 @@ import useSWRInfinite from 'swr/infinite'
 import { Icon } from "../../components/Icon"
 import { useAjax } from '../../lib/ajax'
 import { Loading } from "../../components/Loading"
+import { useEffect } from "react"
 
 type Props = {
   kind: Item['kind']
@@ -10,20 +11,20 @@ type Props = {
   onChange?: (ids: Item['tag_ids']) => void
 }
 
-const getKey = (pageIndex: number, prev: Resources<Item>) => {
-  if (prev) {
-    const sendCount = (prev.pager.page - 1) * prev.pager.per_page + prev.resources.length
-    const count = prev.pager.count
-    if (sendCount >= count) { return null }
-  }
-  return `/api/v1/tags?page=${pageIndex + 1}` as `/${string}`
-}
 
 const Tips: React.FC<{ text: string }> = ({ text }) =>
   <p text-center font-300 color='#999'>-<span px-16px>{text}</span>-</p>
 
 export const Tags: React.FC<Props> = props => {
   const { kind } = props
+  const getKey = (pageIndex: number, prev: Resources<Item>) => {
+    if (prev) {
+      const sendCount = (prev.pager.page - 1) * prev.pager.per_page + prev.resources.length
+      const count = prev.pager.count
+      if (sendCount >= count) { return null }
+    }
+    return `/api/v1/tags?page=${pageIndex + 1}&kind=${kind}`
+  }
 
   const { get } = useAjax({ showLoading: true, handleError: true })
   const { data, error, size, setSize } = useSWRInfinite(
@@ -34,6 +35,7 @@ export const Tags: React.FC<Props> = props => {
   const isLoadingInitialData = !data && !error
   const isLoadingMore = data?.[size - 1] === undefined && !error
   const isLoading = isLoadingInitialData || isLoadingMore
+
   if (!data) {
     return isLoading ? <Loading /> : <div>空</div>
   } else {

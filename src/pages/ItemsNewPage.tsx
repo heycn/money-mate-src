@@ -14,11 +14,11 @@ export const ItemsNewPage: React.FC = () => {
   const tabItems: { key: Item['kind']; text: string; element?: ReactNode }[] = [
     {
       key: 'expense', text: '支出',
-      element: <Tags kind="expense" value={data.tag_ids} onChange={(ids) => setData({ tag_ids: ids })} />
+      element: <Tags kind={data.kind!} value={data.tag_ids} onChange={(ids) => setData({ tag_ids: ids })} />
     },
     {
       key: 'income', text: '收入',
-      element: <Tags kind="income" value={data.tag_ids} onChange={(ids) => setData({ tag_ids: ids })} />
+      element: <Tags kind={data.kind!} value={data.tag_ids} onChange={(ids) => setData({ tag_ids: ids })} />
     }
   ]
   const [currentItemKind] = useState<Item['kind']>('expense')
