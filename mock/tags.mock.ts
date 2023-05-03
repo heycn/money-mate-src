@@ -15,7 +15,7 @@ const create = (attrs?: Partial<Tag>): Tag => {
     deleted_at: null,
     created_at: faker.date.past().toISOString(),
     updated_at: faker.date.past().toISOString(),
-    kind: 'expense',
+    kind: 'expenses',
     ...attrs
   }
 }

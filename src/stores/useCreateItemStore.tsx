@@ -12,7 +12,7 @@ type CreateItem = {
 }
 export const useCreateItemStore = create<CreateItem>(set => ({
   data: {
-    kind: 'expense',
+    kind: 'expenses',
     tag_ids: [],
     happen_at: time().format(),
     amount: 0

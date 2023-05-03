@@ -13,7 +13,7 @@ export const ItemsNewPage: React.FC = () => {
   const { data, setData, setError } = useCreateItemStore()
   const tabItems: { key: Item['kind']; text: string; element?: ReactNode }[] = [
     {
-      key: 'expense', text: '支出',
+      key: 'expenses', text: '支出',
       element: <Tags kind={data.kind!} value={data.tag_ids} onChange={(ids) => setData({ tag_ids: ids })} />
     },
     {
@@ -21,7 +21,7 @@ export const ItemsNewPage: React.FC = () => {
       element: <Tags kind={data.kind!} value={data.tag_ids} onChange={(ids) => setData({ tag_ids: ids })} />
     }
   ]
-  const [currentItemKind] = useState<Item['kind']>('expense')
+  const [currentItemKind] = useState<Item['kind']>('expenses')
   const { post } = useAjax({ showLoading: true, handleError: true })
   const onSubmit = async () => {
     const error = validate(data, [

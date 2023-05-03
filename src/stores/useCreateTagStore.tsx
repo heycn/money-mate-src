@@ -13,7 +13,7 @@ interface CreateTag {
 export const useCreateTagStore = create<CreateTag>((set, get) => (
   {
     data: {
-      kind: 'expense',
+      kind: 'expenses',
       sign: '',
       name: ''
     },

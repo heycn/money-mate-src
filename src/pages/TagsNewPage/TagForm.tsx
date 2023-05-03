@@ -17,7 +17,7 @@ export const TagForm: React.FC<Props> = ({ type }) => {
     if (!kind) {
       throw new Error('kind 必填')
     }
-    if (kind !== 'expense' && kind !== 'income') {
+    if (kind !== 'expenses' && kind !== 'income') {
       throw new Error('kind 必须是 expenses 或 income')
     }
     setData({ kind })
