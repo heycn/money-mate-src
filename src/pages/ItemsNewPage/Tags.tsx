@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom"
-import useSWR from 'swr'
 import useSWRInfinite from 'swr/infinite'
 import { Icon } from "../../components/Icon"
-import { useTagsStore } from '../../stores/useTagsStore'
 import { useAjax } from '../../lib/ajax'
 import { Loading } from "../../components/Loading"
 
@@ -21,13 +19,8 @@ const getKey = (pageIndex: number, prev: Resources<Item>) => {
   return `/api/v1/tags?page=${pageIndex + 1}` as `/${string}`
 }
 
-const Tips: React.FC<{ text: string }> = ({ text }) => {
-  return <p text-center font-300 color='#999'>
-    -
-    <span px-16px>{text}</span>
-    -
-  </p>
-}
+const Tips: React.FC<{ text: string }> = ({ text }) =>
+  <p text-center font-300 color='#999'>-<span px-16px>{text}</span>-</p>
 
 export const Tags: React.FC<Props> = props => {
   const { kind } = props

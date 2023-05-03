@@ -1,4 +1,4 @@
-import { FormEventHandler, ReactNode, useState } from "react"
+import { ReactNode, useState } from "react"
 import { Gradient } from "../components/Gradient"
 import { Tabs } from "../components/Tabs"
 import { TopNav } from "../components/TopNav"
@@ -10,7 +10,7 @@ import { ItemAmount } from "./ItemsNewPage/ItemAmount"
 import { ItemDate } from "./ItemsNewPage/ItemDate"
 
 export const ItemsNewPage: React.FC = () => {
-  const { data, error, setData, setError } = useCreateItemStore()
+  const { data, setData, setError } = useCreateItemStore()
   const tabItems: { key: Item['kind']; text: string; element?: ReactNode }[] = [
     {
       key: 'expense', text: '支出',
