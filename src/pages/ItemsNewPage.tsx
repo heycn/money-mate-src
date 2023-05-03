@@ -44,7 +44,7 @@ export const ItemsNewPage: React.FC = () => {
   return (
     <div h-screen flex flex-col onSubmit={onSubmit}>
       <Gradient grow-0 shrink-0>
-        <TopNav title="记一笔" icon='back' />
+        <TopNav title="记一笔" icon='back' back path='/items' />
         <Tabs
           tabItems={tabItems}
           value={data.kind!}

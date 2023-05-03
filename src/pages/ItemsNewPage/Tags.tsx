@@ -1,5 +1,3 @@
-import type { TouchEvent } from 'react'
-import { useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import useSWRInfinite from 'swr/infinite'
 import { Icon } from "../../components/Icon"
