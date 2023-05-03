@@ -11,7 +11,7 @@ const timeRanges: { key: TimeRange; text: string }[] = [
   { key: 'thisYear', text: '今年' },
   { key: 'custom', text: '自定义时间' }
 ]
-export const ItemRangePicker: React.FC<Props> = ({ currentTimeRange, onChange }) => {
+export const TimeRangePicker: React.FC<Props> = ({ currentTimeRange, onChange }) => {
   return (
     <Tabs tabItems={timeRanges} value={currentTimeRange} onChange={onChange} />
   )

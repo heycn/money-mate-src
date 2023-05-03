@@ -13,7 +13,7 @@ const RightIcon = styled(Icon)`
   width: 16px; height: 16px; color: #999;
 `
 const items = [
-  { icon: 'menu', text: '统计图表', to: '/chart' },
+  { icon: 'menu', text: '统计图表', to: '/statistics' },
   { icon: 'menu', text: '导出数据', to: '/export' },
   { icon: 'menu', text: '自定义标签', to: '/tags' },
   { icon: 'menu', text: '记账提醒', to: '/noty' },

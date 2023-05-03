@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { AddItemFloatButton } from "../components/AddItemFloatButton"
-import { ItemRangePicker, TimeRange } from "../components/ItemRangePicker"
+import { TimeRangePicker, TimeRange } from "../components/TimeRangePicker.tsx"
 import { TopNav } from "../components/TopNav"
 import { ItemsList } from "./ItemsPage/ItemsList"
 import { ItemsSummary } from "./ItemsPage/ItemsSummary"
@@ -22,7 +22,7 @@ export const ItemsPage: React.FC<Props> = ({ title }) => {
     <div h-screen>
       <Gradient>
         <TopNav title={title} icon="menu" />
-        <ItemRangePicker currentTimeRange={currentTimeRange} onChange={setCurrentTimeRange} />
+        <TimeRangePicker currentTimeRange={currentTimeRange} onChange={setCurrentTimeRange} />
       </Gradient>
       <ItemsSummary />
       <ItemsList />

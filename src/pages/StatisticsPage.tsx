@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { AddItemFloatButton } from "../components/AddItemFloatButton"
 import { Gradient } from "../components/Gradient"
-import { ItemRangePicker, TimeRange } from "../components/ItemRangePicker"
+import { TimeRangePicker, TimeRange } from "../components/TimeRangePicker.tsx"
 import { TopNav } from "../components/TopNav"
 import { useTitle } from "../hooks/useTitle"
 import { LineChart } from "../components/LineChart"
@@ -65,7 +65,7 @@ export const StatisticsPage: React.FC<Props> = ({ title }) => {
     <div>
       <Gradient>
         <TopNav title={title} icon="back" />
-        <ItemRangePicker currentTimeRange={currentTimeRange} onChange={setCurrentTimeRange} />
+        <TimeRangePicker currentTimeRange={currentTimeRange} onChange={setCurrentTimeRange} />
       </Gradient>
       <div flex p-16px items-center gap-x-16px>
         <span grow-0 shrink-0>类型</span>
