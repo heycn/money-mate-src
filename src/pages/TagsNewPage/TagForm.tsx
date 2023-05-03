@@ -1,6 +1,9 @@
+import type { AxiosError } from 'axios'
 import { useEffect, FormEventHandler } from "react"
-import { useParams, useSearchParams } from "react-router-dom"
+import { useNavigate, useParams, useSearchParams } from "react-router-dom"
 import { Input } from "../../components/Input"
+import { useAjax } from '../../lib/ajax'
+import type { FormError } from '../../lib/validate'
 import { validate, hasError } from "../../lib/validate"
 import { useCreateTagStore } from "../../stores/useCreateTagStore"
 
@@ -11,6 +14,7 @@ type Props = {
 export const TagForm: React.FC<Props> = ({ type }) => {
   const { data, error, setData, setError } = useCreateTagStore()
   const [searchParams] = useSearchParams()
+  const kind = searchParams.get('kind') ?? ''
   useEffect(() => {
     if (type !== 'create') { return }
     const kind = searchParams.get('kind')
@@ -23,14 +27,27 @@ export const TagForm: React.FC<Props> = ({ type }) => {
     setData({ kind })
   }, [searchParams])
   const params = useParams()
+  const { post } = useAjax({ showLoading: true, handleError: true })
   useEffect(() => {
-    if (type !== 'create') { return }
-    const kind = searchParams.get('kind')
-    if (!kind) { throw new Error('kind 必须是 expenses 或 income') }
-    // 发起 AJAX 请求
+    if (type !== 'edit') { return }
+    const id = params.id
+    if (!id) { throw new Error('id 必填') }
+    // 发起 AJAX 请求获取 tag 数据
+    // 然后 setData
   }, [])
 
-  const onSubmit: FormEventHandler = (e) => {
+  const onSubmitError = (error: AxiosError<{ errors: FormError<typeof data> }>) => {
+    if (error.response) {
+      const { status } = error.response
+      if (status === 422) {
+        const { errors } = error.response.data
+        setError(errors)
+      }
+    }
+    throw error
+  }
+  const nav = useNavigate()
+  const onSubmit: FormEventHandler = async (e) => {
     e.preventDefault()
     const newError = validate(data, [
       { key: 'kind', type: 'required', message: '标签类型必填' },
@@ -40,8 +57,9 @@ export const TagForm: React.FC<Props> = ({ type }) => {
     ])
     setError(newError)
     if (!hasError(newError)) {
-      // 发起 AJAX 请求
-      console.log('没有表单错误')
+      const response = await post<Resource<Tag>>('/api/v1/tags', data).catch(onSubmitError)
+      setData(response.data.resource)
+      nav(`/items/new?kind=${encodeURIComponent(kind)}`, { replace: true })
     }
   }
 
