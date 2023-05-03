@@ -75,7 +75,7 @@ export const Tags: React.FC<Props> = props => {
         <div p-16px pb-32px>
           {error && <Tips text='加载失败 请刷新页面' />}
           {!hasMore
-            ? <Tips text={data[0].pager.count === 0 ? '所选范围 暂无记录' : 'The End'} />
+            ? <Tips text={data[0].pager.count === 0 ? '点击加号 新建标签' : 'The End'} />
             : isLoading
               ? <Loading />
               : <button m-btn onClick={onLoadMore}>加载更多</button>
