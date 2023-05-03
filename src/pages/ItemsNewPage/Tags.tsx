@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom"
+import type { TouchEvent } from 'react'
+import { useEffect, useRef } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import useSWRInfinite from 'swr/infinite'
 import { Icon } from "../../components/Icon"
 import { useAjax } from '../../lib/ajax'
 import { Loading } from "../../components/Loading"
-import { useEffect } from "react"
 
 type Props = {
   kind: Item['kind']
@@ -36,6 +37,33 @@ export const Tags: React.FC<Props> = props => {
   const isLoadingMore = data?.[size - 1] === undefined && !error
   const isLoading = isLoadingInitialData || isLoadingMore
 
+  const touchTimer = useRef<number>()
+  const touchPosition = useRef<{ x?: number; y?: number }>({ x: undefined, y: undefined })
+  const nav = useNavigate()
+  const onTouchStart = (e: TouchEvent<HTMLLIElement>, id: Tag['id']) => {
+    touchTimer.current = window.setTimeout(() => {
+      nav(`/tags/${id}`, { replace: true })
+    }, 500)
+    const { clientX: x, clientY: y } = e.touches[0]
+    touchPosition.current = { x, y }
+  }
+  const onTouchMove = (e: TouchEvent<HTMLLIElement>, id: Tag['id']) => {
+    const { clientX: newX, clientY: newY } = e.touches[0]
+    const { x, y } = touchPosition.current
+    if (x === undefined || y === undefined) { return }
+    const distance = Math.sqrt((newX - x) ** 2 + (newY - y) ** 2)
+    if (distance > 10) {
+      window.clearTimeout(touchTimer.current)
+      touchTimer.current = undefined
+    }
+  }
+  const onTouchEnd = (e: TouchEvent<HTMLLIElement>, id: Tag['id']) => {
+    if (touchTimer.current) {
+      window.clearTimeout(touchTimer.current)
+      touchTimer.current = undefined
+    }
+  }
+
   if (!data) {
     return isLoading ? <Loading /> : <div>空</div>
   } else {
@@ -43,6 +71,7 @@ export const Tags: React.FC<Props> = props => {
     const last = data[data.length - 1]
     const { page, per_page, count } = last.pager
     const hasMore = (page - 1) * per_page + last.resources.length < count
+
     return (
       <>
         <ol grid grid-cols="[repeat(auto-fit,48px)]" justify-center gap-x-32px gap-y-16px py-16px px-8px>
@@ -55,7 +84,12 @@ export const Tags: React.FC<Props> = props => {
           </Link>
           {data.map(({ resources }) => {
             return resources.map((tag, idx) => (
-              <li key={idx} flex justify-center items-center flex-col>
+              <li key={idx} flex justify-center items-center flex-col
+                onClick={() => { props.onChange?.([tag.id]) }}
+                onTouchStart={(e) => onTouchStart(e, tag.id)}
+                onTouchMove={(e) => onTouchMove(e, tag.id)}
+                onTouchEnd={(e) => onTouchEnd(e, tag.id)}
+              >
                 <div style={{ borderColor: props.value?.includes(tag.id) ? 'var(--primary-color)' : 'transparent' }}
                   b-2 bg-white rounded='50%' w-56px h-56px flex justify-center items-center text-26px
                   onClick={() => props.onChange?.([tag.id])}
