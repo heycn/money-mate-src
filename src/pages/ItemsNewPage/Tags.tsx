@@ -42,7 +42,7 @@ export const Tags: React.FC<Props> = props => {
   const isLoadingMore = data?.[size - 1] === undefined && !error
   const isLoading = isLoadingInitialData || isLoadingMore
   if (!data) {
-    return <div>空</div>
+    return isLoading ? <Loading /> : <div>空</div>
   } else {
     const onLoadMore = () => setSize(size + 1)
     const last = data[data.length - 1]
