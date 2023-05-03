@@ -65,7 +65,16 @@ export const StatisticsPage: React.FC<Props> = ({ title }) => {
     <div>
       <Gradient>
         <TopNav title={title} icon="back" />
-        <TimeRangePicker currentTimeRange={currentTimeRange} onChange={setCurrentTimeRange} />
+        <TimeRangePicker
+          currentTimeRange={currentTimeRange}
+          onChange={setCurrentTimeRange}
+          timeRanges={[
+            { key: 'thisMonth', text: '本月' },
+            { key: 'lastMonth', text: '上月' },
+            { key: 'twoMonthsAgo', text: '两个月前' },
+            { key: 'threeMonthsAgo', text: '三个月前' },
+          ]}
+        />
       </Gradient>
       <div flex p-16px items-center gap-x-16px>
         <span grow-0 shrink-0>类型</span>
@@ -81,6 +90,7 @@ export const StatisticsPage: React.FC<Props> = ({ title }) => {
           />
         </div>
       </div>
+      <div>{currentTimeRange}</div>
       <LineChart className="h-120px" items={items} />
       <PieChart className="h-260px m-t-16px" items={items2} />
       <RankChart className="m-t-8px" items={items3} />
