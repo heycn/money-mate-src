@@ -9,7 +9,7 @@ type Props = {
   value?: string
   onChange?: (value: string) => void
 } & (
-    | { type: 'text' }
+    | { type?: 'text' }
     | { type: 'emoji' }
     | { type: 'email' }
     | { type: 'sms_code'; request: () => Promise<unknown> }
