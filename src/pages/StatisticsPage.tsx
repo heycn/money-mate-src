@@ -28,6 +28,14 @@ type GetKeyParams = {
 const getKey = ({ start, end, kind, group_by }: GetKeyParams) => {
   return `/api/v1/items/summary?happened_after=${start.format('yyyy-MM-dd')}&happened_before=${end.format('yyyy-MM-dd')}&kind=${kind}&group_by=${group_by}`
 }
+const timeRangeMap: { [k in TimeRange]: number } = {
+  thisYear: 0,
+  custom: 0,
+  thisMonth: 0,
+  lastMonth: -1,
+  twoMonthsAgo: -2,
+  threeMonthsAgo: -3,
+}
 
 export const StatisticsPage: React.FC<Props> = ({ title }) => {
   const [currentTimeRange, setCurrentTimeRange] = useState<TimeRange>('thisMonth')
@@ -36,14 +44,8 @@ export const StatisticsPage: React.FC<Props> = ({ title }) => {
   const { get } = useAjax({ showLoading: false, handleError: true })
 
   const generateStartEnd = () => {
-    let start: Time
-    if (currentTimeRange === 'thisMonth') {
-      start = time().firstDayOfMonth
-    } else if (currentTimeRange === 'lastMonth') {
-      start = time().add(-1, 'month').firstDayOfMonth
-    } else {
-      start = time()
-    }
+    const selected: Time = time().add(timeRangeMap[currentTimeRange], 'month')
+    const start = selected.firstDayOfMonth
     const end = start.lastDayOfMonth.add(1, 'day')
     return { start, end }
   }
