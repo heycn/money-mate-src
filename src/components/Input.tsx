@@ -1,3 +1,5 @@
+import type { ChangeEvent, ReactNode } from 'react'
+import { DateInput } from './Input/DateInput'
 import { Data } from "../lib/validate"
 import { Icon } from "./Icon"
 import { EmojiInput } from "./Input/EmojiInput"
@@ -12,6 +14,7 @@ type Props = {
     | { type?: 'text' }
     | { type: 'emoji' }
     | { type: 'email' }
+    | { type: 'date' }
     | { type: 'sms_code'; request: () => Promise<unknown> }
     | { type: 'select'; options: { value: string; text: string }[] }
   )
@@ -19,7 +22,16 @@ type Props = {
 const emailConfig = { placeholder: '请输入邮箱', type: 'text', autoComplete: "off" }
 
 export const Input: React.FC<Props> = props => {
-  const { placeholder, error, value, onChange } = props
+  const { placeholder, type, value, onChange: _onChange, error } = props
+  const onChange = (e: string | ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    if (typeof e === 'string') {
+      _onChange?.(e)
+    } else {
+      _onChange?.(e.target.value)
+    }
+  }
+  const common = { value, onChange, placeholder }
+
   const renderInput = () => {
     switch (props.type) {
       case undefined:
@@ -28,20 +40,18 @@ export const Input: React.FC<Props> = props => {
           <input className=" focus:bg-#00000004 focus:b-1 focus:b-solid focus:b-#73b19f placeholder-color-#0003"
             bg="#00000009" text-center b-1 b-transparent p-y-4px p-x-12px min-h-48px leading-24px text-16px font-bold w-full rounded-8px
             type="text"
-            placeholder={placeholder}
-            color="#303133" value={value}
-            onChange={e => onChange?.(e.target.value)}
+            color="#303133"
+            {...common}
           />
           <span text-red text-12px>{error || '　'}</span>
         </>
       case 'emoji':
         return <>
-          <EmojiInput value={value} onChange={onChange} />
+          <EmojiInput {...common} />
           <span text-red text-12px>{error || '　'}</span>
         </>
       case 'select':
-        return <select value={value} onChange={e => onChange?.(e.target.value)}
-          className="h-36px">
+        return <select className="h-36px" {...common}>
           {props.options.map(option =>
             <option key={option.value} value={option.value}> {option.text} </option>
           )}
@@ -50,17 +60,19 @@ export const Input: React.FC<Props> = props => {
         return <>
           <div form-item-sing-in>
             <Icon className='w-24px h-24px' name='menu' />
-            <input {...emailConfig} w-full input-sign-in
-              value={value}
-              onChange={e => onChange?.(e.target.value)}
-            />
+            <input {...emailConfig} w-full input-sign-in {...common} />
           </div>
           <p pl-34px text-red>{error || '　'}</p>
         </>
       case 'sms_code':
         return <>
-          <SmsCodeInput value={value} onChange={onChange} request={props.request} />
+          <SmsCodeInput {...common} request={props.request} />
           <p pl-34px text-red>{error || '　'}</p>
+        </>
+      case 'date':
+        return <>
+          <DateInput {...common} />
+          <span text-red text-12px>{error || '　'}</span>
         </>
       default:
         return null
