@@ -5,11 +5,11 @@ import { Icon } from "./Icon"
 import { EmojiInput } from "./Input/EmojiInput"
 import { SmsCodeInput } from "./Input/SmsCodeInput"
 
-type Props = {
+type Props<T> = {
   placeholder?: string
   error?: string
-  value?: string
-  onChange?: (value: string) => void
+  value?: T
+  onChange?: (value: T) => void
 } & (
     | { type?: 'text' }
     | { type: 'emoji' }
@@ -21,14 +21,11 @@ type Props = {
 
 const emailConfig = { placeholder: '请输入邮箱', type: 'text', autoComplete: "off" }
 
-export const Input: React.FC<Props> = props => {
+export const Input = <T extends string>(props: Props<T>) => {
   const { placeholder, value, onChange: _onChange, error } = props
   const onChange = (e: string | ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    if (typeof e === 'string') {
-      _onChange?.(e)
-    } else {
-      _onChange?.(e.target.value)
-    }
+    const value = typeof e === 'string' ? e : e.target.value
+    _onChange?.(value as T)
   }
   const common = { value, onChange, placeholder }
 
