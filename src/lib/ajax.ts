@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useLoadingStore } from '../stores/useLoadingStore'
 
 // 静态配置项直接用 defaults 配置
-axios.defaults.baseURL = isDev ? '/' : 'https://mangosteen2.hunger-valley.com/api/v1/'
+axios.defaults.baseURL = isDev ? '/' : 'https://mangosteen2.hunger-valley.com/'
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 axios.defaults.timeout = 10000
 
