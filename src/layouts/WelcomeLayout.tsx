@@ -11,7 +11,7 @@ const nextLinkMap: Record<Pathname, Pathname> = {
   '/welcome/1': '/welcome/2',
   '/welcome/2': '/welcome/3',
   '/welcome/3': '/welcome/4',
-  '/welcome/4': '/home'
+  '/welcome/4': '/items'
 }
 const prevLinkMap: Record<Pathname, Pathname> = {
   '/welcome/2': '/welcome/1',
@@ -69,7 +69,7 @@ export const WelcomeLayout: React.FC = () => {
     <div h-screen flex flex-col items-stretch bg='#ebf5f6' bg-gradient='to-br from-#addcd4'>
       <header shrink-0 mb-32px>
         <p align-revert flex justify-end p-32px>
-          <Link to="/home" replace onClick={onSkip} rounded-18px b-1 px-8px py-4px text='#0000003a'>
+          <Link to="/items" replace onClick={onSkip} rounded-18px b-1 px-8px py-4px text='#0000003a' b-solid>
             跳过并不再显示
           </Link>
         </p>

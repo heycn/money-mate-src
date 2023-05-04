@@ -9,7 +9,7 @@ export const ItemsPageError: React.FC = () => {
     const from = encodeURIComponent(`${loc.pathname}${loc.search}`)
     return <Navigate to={`/sign_in?from=${from}`} replace/>
   } else if (e instanceof ErrorEmptyData) {
-    return <Navigate to="/home" replace/>
+    return <Navigate to="/items" replace/>
   } else {
     return <div>出错了</div>
   }
