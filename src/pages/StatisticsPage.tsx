@@ -1,7 +1,8 @@
 import { useState } from "react"
 import useSWR from 'swr'
 import { Gradient } from "../components/Gradient"
-import { TimeRangePicker, TimeRange } from "../components/TimeRangePicker.tsx"
+import { TimeRangePicker, TimeRange } from "../components/TimeRangePicker"
+import { timeRangeToStartAndEnd } from '../lib/timeRangeToStartAndEnd'
 import { TopNav } from "../components/TopNav"
 import { useTitle } from "../hooks/useTitle"
 import { LineChart } from "../components/LineChart"
@@ -28,14 +29,6 @@ type GetKeyParams = {
 const getKey = ({ start, end, kind, group_by }: GetKeyParams) => {
   return `/api/v1/items/summary?happened_after=${start.format('yyyy-MM-dd')}&happened_before=${end.format('yyyy-MM-dd')}&kind=${kind}&group_by=${group_by}`
 }
-const timeRangeMap: { [k in TimeRange]: number } = {
-  thisYear: 0,
-  custom: 0,
-  thisMonth: 0,
-  lastMonth: -1,
-  twoMonthsAgo: -2,
-  threeMonthsAgo: -3,
-}
 
 export const StatisticsPage: React.FC<Props> = ({ title }) => {
   const [currentTimeRange, setCurrentTimeRange] = useState<TimeRange>('thisMonth')
@@ -43,19 +36,13 @@ export const StatisticsPage: React.FC<Props> = ({ title }) => {
   const [kind, setKind] = useState<Item['kind']>('expenses')
   const { get } = useAjax({ showLoading: false, handleError: true })
 
-  const generateStartEnd = () => {
-    const selected: Time = time().add(timeRangeMap[currentTimeRange], 'month')
-    const start = selected.firstDayOfMonth
-    const end = start.lastDayOfMonth.add(1, 'day')
-    return { start, end }
-  }
   const generateDefaultItems = (time: Time) => {
     return Array.from({ length: start.dayCountOfMonth }).map((_, i) => {
       const x = start.clone.add(i, 'day').format(format)
       return { x, y: 0 }
     })
   }
-  const { start, end } = generateStartEnd()
+  const { start, end } = timeRangeToStartAndEnd(currentTimeRange)
   const defaultItems = generateDefaultItems(start)
   const { data: items } = useSWR(getKey({ start, end, kind, group_by: 'happen_at' }),
     async (path) =>

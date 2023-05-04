@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { AddItemFloatButton } from "../components/AddItemFloatButton"
-import { TimeRangePicker, TimeRange } from "../components/TimeRangePicker.tsx"
+import { TimeRangePicker, TimeRange } from "../components/TimeRangePicker"
+import { time } from '../lib/time'
+import { timeRangeToStartAndEnd } from '../lib/timeRangeToStartAndEnd'
 import { TopNav } from "../components/TopNav"
 import { ItemsList } from "./ItemsPage/ItemsList"
 import { ItemsSummary } from "./ItemsPage/ItemsSummary"
@@ -16,6 +18,7 @@ interface Props {
 export const ItemsPage: React.FC<Props> = ({ title }) => {
   const [currentTimeRange, setCurrentTimeRange] = useState<TimeRange>('thisMonth')
   const { visible, setVisible } = useMenuStore()
+  const { start, end } = timeRangeToStartAndEnd(currentTimeRange)
   useTitle(title)
 
   return (
@@ -25,7 +28,7 @@ export const ItemsPage: React.FC<Props> = ({ title }) => {
         <TimeRangePicker currentTimeRange={currentTimeRange} onChange={setCurrentTimeRange} />
       </Gradient>
       <ItemsSummary />
-      <ItemsList />
+      <ItemsList start={start} end={end} />
       <AddItemFloatButton />
       <TopMenu visible={visible} onClickMask={() => setVisible(false)} />
     </div>

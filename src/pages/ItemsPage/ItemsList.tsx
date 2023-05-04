@@ -1,14 +1,11 @@
 import useSWRInfinite from 'swr/infinite'
 import { useAjax } from '../../lib/ajax'
 import { Loading } from '../../components/Loading'
+import type { Time } from '../../lib/time'
 
-const getKey = (pageIndex: number, prev: Resources<Item>) => {
-  if (prev) {
-    const sendCount = (prev.pager.page - 1) * prev.pager.per_page + prev.resources.length
-    const count = prev.pager.count
-    if (sendCount >= count) { return null }
-  }
-  return `/api/v1/items?page=${pageIndex + 1}` as `/${string}`
+interface Props {
+  start: Time
+  end: Time
 }
 
 const Tips: React.FC<{ text: string }> = ({ text }) => {
@@ -19,8 +16,17 @@ const Tips: React.FC<{ text: string }> = ({ text }) => {
   </p>
 }
 
-export const ItemsList: React.FC = () => {
+export const ItemsList: React.FC<Props> = (props) => {
+  const { start, end } = props
   const { get } = useAjax()
+  const getKey = (pageIndex: number, prev: Resources<Item>) => {
+    if (prev) {
+      const sendCount = (prev.pager.page - 1) * prev.pager.per_page + prev.resources.length
+      const count = prev.pager.count
+      if (sendCount >= count) { return null }
+    }
+    return `/api/v1/items?page=${pageIndex + 1}&happened_after=${start.format('yyyy-MM-dd')}&happened_before=${end.format('yyyy-MM-dd')}`
+  }
   const { data, error, size, setSize } = useSWRInfinite(
     getKey,
     async path => (await get<Resources<Item>>(path)).data,
