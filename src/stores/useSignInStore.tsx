@@ -16,8 +16,8 @@ interface SignIn {
 export const useSignInStore = create<SignIn>(set => ({
   data: {
     // TODO: 删掉这个邮箱地址
-    email: 'heycn@foxmail.com',
-    code: ''
+    email: 'test@test.test',
+    code: '123456'
   },
   error: {
     email: [],

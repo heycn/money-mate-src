@@ -1,11 +1,9 @@
 import logo from '../assets/images/logo.svg'
 import useSWR from 'swr'
 import { useAjax } from '../lib/ajax'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { Navigate, Link } from 'react-router-dom'
 import { useTitle } from '../hooks/useTitle'
 import { Loading } from '../components/Loading'
-import { AddItemFloatButton } from '../components/AddItemFloatButton'
-import { AxiosError } from 'axios'
 
 interface Props {
   title?: string
@@ -37,9 +35,10 @@ export const Home: React.FC<Props> = props => {
         好好记账 自由生活
       </h1>
       <div px-16px>
-        <button m-btn>去记账</button>
+        <Link to="/items" replace>
+          <button m-btn>开始记账</button>
+        </Link>
       </div>
-      <AddItemFloatButton />
     </div>
   )
 }
