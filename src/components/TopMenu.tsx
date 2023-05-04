@@ -2,6 +2,7 @@ import { animated, useSpring } from '@react-spring/web'
 import { Menu } from './TopMenu/Menu'
 import { User } from './TopMenu/User'
 import { useState } from 'react'
+import { comfirmable } from '../lib/comfirmable'
 
 interface Props {
   onClickMask: () => void
@@ -23,6 +24,10 @@ export const TopMenu: React.FC<Props> = ({ onClickMask, visible }) => {
     ...maskSpringStyle,
     visibility: (maskVisible ? 'visible' : 'hidden') as 'visible' | 'hidden'
   }
+  const signOut = comfirmable('确定要退出登录吗？', () => {
+    window.localStorage.removeItem('jwt')
+    window.location.reload()
+  })
 
   return (
     <>
@@ -33,6 +38,7 @@ export const TopMenu: React.FC<Props> = ({ onClickMask, visible }) => {
         style={menuSpringStyle} bg='#f5f5f5' p-16px z="[calc(var(--z-menu)-1)]">
         <User className="grow-0 shrink-0" />
         <Menu className="grow-1 shrink-1" />
+        <button m-btn mb-24px onClick={signOut}>退出登录</button>
       </animated.div>
     </>
   )
