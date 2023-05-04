@@ -9,6 +9,7 @@ import { useCreateItemStore } from '../stores/useCreateItemStore'
 import { Tags } from "./ItemsNewPage/Tags"
 import { ItemAmount } from "./ItemsNewPage/ItemAmount"
 import { ItemDate } from "./ItemsNewPage/ItemDate"
+import { time } from "../lib/time"
 
 export const ItemsNewPage: React.FC = () => {
   const { data, setData, setError } = useCreateItemStore()
@@ -39,6 +40,7 @@ export const ItemsNewPage: React.FC = () => {
       window.alert(message)
     } else {
       await post<Resource<Item>>('/api/v1/items', data)
+      setData({ amount: 0, happen_at: time().isoString })
       nav('/items', { replace: true })
     }
   }
