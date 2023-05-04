@@ -46,8 +46,9 @@ export const TimeRangePicker: React.FC<Props> = (props) => {
       start: time(start),
       end: time(end).add(1, 'day')
     })
+    hide()
   }
-  const { popup, show } = usePopup({
+  const { popup, show, hide } = usePopup({
     zIndex: 'var(--z-dialog)',
     children: <div w-72vw>
       <header text-18px text="[var(--primary-color)]" text-center py-14px px-16px>请选择时间</header>
