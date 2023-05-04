@@ -22,6 +22,7 @@ const compareKey = <T extends (string | { name: string })>(a: T, c: T) => {
 
 export const Tabs = <T extends string | { name: string }>(props: Props<T>) => {
   const { tabItems, value, onChange, className } = props
+  console.log(tabItems)
 
   return (
     <ol flex text='#798196' children-p-12px text-16px
@@ -30,7 +31,7 @@ export const Tabs = <T extends string | { name: string }>(props: Props<T>) => {
         <li
           key={typeof key === 'string' ? key : key.name}
           onClick={() => onChange(key)}
-          className={key === value ? s.selected : ''}
+          className={compareKey(key, value)  ? s.selected : ''}
         >
           {text}
         </li>
