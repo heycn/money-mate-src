@@ -39,7 +39,7 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     loader: async () => {
       return await ajax.get<Resource<User>>('/api/v1/me').catch(e => {
-        // if (e.response?.status === 401) { throw new ErrorUnauthorized }
+        if (e.response?.status === 401) { throw new ErrorUnauthorized }
         throw e
       })
     },

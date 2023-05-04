@@ -66,7 +66,7 @@ export const StatisticsPage: React.FC<Props> = ({ title }) => {
   return (
     <div>
       <Gradient>
-        <TopNav title={title} icon="back" />
+        <TopNav title={title} icon="back" back path='/items' />
         <TimeRangePicker
           currentTimeRange={currentTimeRange}
           onChange={setCurrentTimeRange}

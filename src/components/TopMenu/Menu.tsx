@@ -14,9 +14,9 @@ const RightIcon = styled(Icon)`
 `
 const items = [
   { icon: 'menu', text: '统计图表', to: '/statistics' },
-  { icon: 'menu', text: '导出数据', to: '/export' },
-  { icon: 'menu', text: '自定义标签', to: '/tags' },
-  { icon: 'menu', text: '记账提醒', to: '/noty' },
+  { icon: 'menu', text: '导出数据' },
+  { icon: 'menu', text: '自定义标签' },
+  { icon: 'menu', text: '记账提醒' },
 ]
 
 export const Menu: React.FC<Props> = ({ className }) => {
@@ -24,11 +24,17 @@ export const Menu: React.FC<Props> = ({ className }) => {
     <div className={className}>
       <ul bg-white text-16px pl-16px pr-8px rounded-8px shadow-xl shadow-light-7>
         {items.map(({ icon, text, to }) => (
-          <li key={to} children-flex children-justify-between children-items-center children-py-4>
-            <NavLink to={to} replace>
-              <span flex items-center><MenuIcon name="menu" />{text}</span>
-              <RightIcon name="right" />
-            </NavLink>
+          <li key={text} children-flex children-justify-between children-items-center children-py-4>
+            {to
+              ? <NavLink to={to} replace>
+                <span flex items-center><MenuIcon name={icon} />{text}</span>
+                <RightIcon name="right" />
+              </NavLink>
+              : <div onClick={() => window.alert('敬请期待！')}>
+                <span flex items-center><MenuIcon name={icon} />{text}</span>
+                <RightIcon name="right" />
+              </div>
+            }
           </li>
         ))}
       </ul>
