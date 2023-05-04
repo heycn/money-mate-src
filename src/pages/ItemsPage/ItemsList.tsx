@@ -1,7 +1,7 @@
 import useSWRInfinite from 'swr/infinite'
 import { useAjax } from '../../lib/ajax'
 import { Loading } from '../../components/Loading'
-import type { Time } from '../../lib/time'
+import { Time, time } from '../../lib/time'
 
 interface Props {
   start: Time
@@ -57,8 +57,12 @@ export const ItemsList: React.FC<Props> = (props) => {
               <div flex>
                 <div text-36px mr-8px>😘</div>
                 <div flex flex-col justify-center py-8px>
-                  <div text='#333'>旅行</div>
-                  <div text='#999' text-12px font-300 pt-1>2011-01-01</div>
+                  <div text='#333'>
+                    {item.tags?.[0].name}
+                  </div>
+                  <div text='#999' text-12px font-300 pt-1>
+                    {time(item.happen_at).format('yyyy-MM-dd HH:mm')}
+                  </div>
                 </div>
               </div>
               <div text='#181818' text-18px font-500>{item.amount / 100}</div>
