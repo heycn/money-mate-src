@@ -22,7 +22,7 @@ type Props = {
 const emailConfig = { placeholder: '请输入邮箱', type: 'text', autoComplete: "off" }
 
 export const Input: React.FC<Props> = props => {
-  const { placeholder, type, value, onChange: _onChange, error } = props
+  const { placeholder, value, onChange: _onChange, error } = props
   const onChange = (e: string | ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     if (typeof e === 'string') {
       _onChange?.(e)

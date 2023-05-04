@@ -2,7 +2,6 @@ import { useState } from "react"
 import useSWR from 'swr'
 import { Gradient } from "../components/Gradient"
 import { TimeRangePicker, TimeRange } from "../components/TimeRangePicker"
-import { timeRangeToStartAndEnd } from '../lib/timeRangeToStartAndEnd'
 import { TopNav } from "../components/TopNav"
 import { useTitle } from "../hooks/useTitle"
 import { LineChart } from "../components/LineChart"
@@ -46,7 +45,7 @@ export const StatisticsPage: React.FC<Props> = ({ title }) => {
       return { x, y: 0 }
     })
   }
-  const { start, end } = timeRangeToStartAndEnd(currentTimeRange)
+  const { start, end } = currentTimeRange
   const defaultItems = generateDefaultItems(start)
   const { data: items } = useSWR(getKey({ start, end, kind, group_by: 'happen_at' }),
     async (path) =>

@@ -43,20 +43,20 @@ export const TimeRangePicker: React.FC<Props> = (props) => {
   const onConfirm = () => {
     _onSelect({
       name: 'custom',
-      start: time(),
-      end: time()
+      start: time(start),
+      end: time(end).add(1, 'day')
     })
   }
   const { popup, show } = usePopup({
     zIndex: 'var(--z-dialog)',
-    children: <div onClick={onConfirm} w-72vw>
+    children: <div w-72vw>
       <header text-18px text="[var(--primary-color)]" text-center py-14px px-16px>请选择时间</header>
       <main px-16px pt-6px>
         <Input type="date" value={start} onChange={d => setStart(d)} placeholder='开始时间' />
         <Input type="date" value={end} onChange={d => setEnd(d)} placeholder='结束时间' />
       </main>
       <footer pb-24px px-16px>
-        <button m-btn>确认</button>
+        <button m-btn onClick={onConfirm}>确认</button>
       </footer>
     </div>,
     position: 'center'
