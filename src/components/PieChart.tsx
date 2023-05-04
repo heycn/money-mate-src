@@ -44,6 +44,8 @@ export const PieChart: React.FC<Props> = (props) => {
   }, [items])
 
   return (
-    <div ref={div} className={className}></div>
+    <>
+      <div ref={div} className={className}></div>
+    </>
   )
 }
