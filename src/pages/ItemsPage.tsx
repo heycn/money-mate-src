@@ -16,7 +16,11 @@ interface Props {
 }
 
 export const ItemsPage: React.FC<Props> = ({ title }) => {
-  const [currentTimeRange, setCurrentTimeRange] = useState<TimeRange>('thisMonth')
+  const [currentTimeRange, setCurrentTimeRange] = useState<TimeRange>({
+    name: 'thisMonth',
+    start: time().firstDayOfMonth,
+    end: time().lastDayOfMonth.add(1, 'day')
+  })
   const { visible, setVisible } = useMenuStore()
   const { start, end } = timeRangeToStartAndEnd(currentTimeRange)
   useTitle(title)

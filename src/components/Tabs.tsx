@@ -10,7 +10,17 @@ type Props<T> = {
   className?: string
 }
 
-export const Tabs = <T extends string>(props: Props<T>) => {
+const compareKey = <T extends (string | { name: string })>(a: T, c: T) => {
+  if (typeof a === 'string' && typeof c === 'string') {
+    return a === c
+  } else if (a instanceof Object && c instanceof Object) {
+    return a.name === c.name
+  } else {
+    return false
+  }
+}
+
+export const Tabs = <T extends string | { name: string }>(props: Props<T>) => {
   const { tabItems, value, onChange, className } = props
 
   return (
@@ -18,7 +28,7 @@ export const Tabs = <T extends string>(props: Props<T>) => {
       gap-8px overflow-scroll className={className}>
       {tabItems.map(({ key, text }) => (
         <li
-          key={key}
+          key={typeof key === 'string' ? key : key.name}
           onClick={() => onChange(key)}
           className={key === value ? s.selected : ''}
         >

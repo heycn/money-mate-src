@@ -31,7 +31,11 @@ const getKey = ({ start, end, kind, group_by }: GetKeyParams) => {
 }
 
 export const StatisticsPage: React.FC<Props> = ({ title }) => {
-  const [currentTimeRange, setCurrentTimeRange] = useState<TimeRange>('thisMonth')
+  const [currentTimeRange, setCurrentTimeRange] = useState<TimeRange>({
+    name: 'thisMonth',
+    start: time().firstDayOfMonth,
+    end: time().lastDayOfMonth.add(1, 'day')
+  })
   useTitle(title)
   const [kind, setKind] = useState<Item['kind']>('expenses')
   const { get } = useAjax({ showLoading: false, handleError: true })
@@ -68,10 +72,22 @@ export const StatisticsPage: React.FC<Props> = ({ title }) => {
           currentTimeRange={currentTimeRange}
           onChange={setCurrentTimeRange}
           timeRanges={[
-            { key: 'thisMonth', text: '本月' },
-            { key: 'lastMonth', text: '上月' },
-            { key: 'twoMonthsAgo', text: '两个月前' },
-            { key: 'threeMonthsAgo', text: '三个月前' },
+            {
+              text: '本月',
+              key: { name: 'thisMonth', start: time().firstDayOfMonth, end: time().lastDayOfMonth.add(1, 'day') },
+            },
+            {
+              text: '上月',
+              key: { name: 'lastMonth', start: time().add(-1, 'month').firstDayOfMonth, end: time().add(-1, 'month').lastDayOfMonth.add(1, 'day') },
+            },
+            {
+              text: '两个月前',
+              key: { name: 'twoMonthsAgo', start: time().add(-2, 'month').firstDayOfMonth, end: time().add(-2, 'month').lastDayOfMonth.add(1, 'day') },
+            },
+            {
+              text: '三个月前',
+              key: { name: 'threeMonthsAgo', start: time().add(-3, 'month').firstDayOfMonth, end: time().add(-3, 'month').lastDayOfMonth.add(1, 'day') },
+            },
           ]}
         />
       </Gradient>
