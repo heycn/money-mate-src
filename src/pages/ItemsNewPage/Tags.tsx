@@ -59,7 +59,7 @@ export const Tags: React.FC<Props> = props => {
               <li key={idx} flex justify-center items-center flex-col>
                 <LongPressable onEnd={() => nav(`/tags/${tag.id}`, { replace: true })}>
                   <div style={{ borderColor: props.value?.includes(tag.id) ? 'var(--primary-color)' : 'transparent' }}
-                    b-2 bg-white rounded='50%' w-56px h-56px flex justify-center items-center text-26px
+                    b-2 bg-white b-solid rounded='50%' w-56px h-56px flex justify-center items-center text-26px
                     onClick={() => props.onChange?.([tag.id])}
                   >
                     {tag.sign}

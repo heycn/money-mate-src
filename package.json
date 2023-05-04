@@ -36,7 +36,8 @@
     "svgo": "3.0.2",
     "svgstore": "3.0.1",
     "typescript": "4.9.3",
-    "unocss": "0.45.30",
+    "@unocss/core": "^0.50.4",
+    "unocss": "0.50.4",
     "vite": "4.2.0",
     "vite-plugin-mock": "2.9.6"
   }

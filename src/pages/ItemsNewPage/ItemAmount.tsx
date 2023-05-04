@@ -76,7 +76,7 @@ export const ItemAmount: React.FC<Props> = (props) => {
   return (
     <>
       <div className={className}>
-        <div flex p-t-15px p-b-16px px-16px border-t-1px border-t="#ddd" items-center>
+        <div flex p-t-15px p-b-16px px-16px border-t-1px b-t-solid border-t="#ddd" items-center>
           {props.itemDate}
           <code grow-1 shrink-1 text-right text-20px color-black>{output}</code>
         </div>
