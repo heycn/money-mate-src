@@ -26,7 +26,7 @@ export const Input: React.FC<Props> = props => {
       case 'text':
         return <>
           <input className=" focus:bg-#00000004 focus:b-1 focus:b-solid focus:b-#73b19f placeholder-color-#0003"
-            bg="#00000009" text-center b-1 b-transparent p-y-4px p-l-12px min-h-48px leading-24px text-16px font-bold w-full rounded-8px
+            bg="#00000009" text-center b-1 b-transparent p-y-4px p-x-12px min-h-48px leading-24px text-16px font-bold w-full rounded-8px
             type="text"
             placeholder={placeholder}
             color="#303133" value={value}

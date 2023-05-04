@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import { usePopup } from '../hooks/usePopup'
 import type { Time } from '../lib/time'
 import { time } from '../lib/time'
 import { Tabs } from './Tabs'
+import { Input } from './Input'
 
 export type TimeRange = {
   start: Time
@@ -36,6 +38,8 @@ type Props = {
 }
 export const TimeRangePicker: React.FC<Props> = (props) => {
   const { currentTimeRange, onChange: _onSelect, timeRanges = defaultTimeRanges } = props
+  const [start, setStart] = useState<string>('')
+  const [end, setEnd] = useState<string>('')
   const onConfirm = () => {
     _onSelect({
       name: 'custom',
@@ -44,7 +48,16 @@ export const TimeRangePicker: React.FC<Props> = (props) => {
     })
   }
   const { popup, show } = usePopup({
-    children: <div onClick={onConfirm}>弹框</div>,
+    children: <div onClick={onConfirm}>
+      <header text-18px bg="[var(--color-purple)]" text-white py-13px p-l-16px>请选择时间</header>
+      <main p-16px>
+        <Input value={start} onChange={d => setStart(d)} placeholder='开始时间' />
+        <Input value={end} onChange={d => setEnd(d)} placeholder='结束时间'/>
+      </main>
+      <footer>
+        <button border-none bg-transparent px-16px py-8px>确认</button>
+      </footer>
+    </div>,
     position: 'center'
   })
   const onSelect = (timeRange: TimeRange) => {
