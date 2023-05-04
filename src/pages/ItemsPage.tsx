@@ -47,7 +47,7 @@ export const ItemsPage: React.FC<Props> = ({ title }) => {
           自定义时间跨度不能超过 365 天
         </div>
         : <>
-          <ItemsSummary />
+          <ItemsSummary start={start} end={end} />
           <ItemsList start={start} end={end} />
         </>
       }
