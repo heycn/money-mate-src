@@ -8,7 +8,6 @@ export const useCountDown: CountDown = second => {
   useEffect(() => {
     if (seconds > 0) {
       timer.current = window.setInterval(() => {
-        console.log('update')
         setSeconds(seconds - 1)
       }, 1000)
     }

@@ -27,7 +27,6 @@ export const SignInPage: React.FC<Props> = props => {
   }
   const [search] = useSearchParams()
   const from = search.get('from') || '/items'
-  console.log(from)
   const onSubmit: FormEventHandler<HTMLFormElement> = async e => {
     e.preventDefault()
     const newError = validate(data, [
