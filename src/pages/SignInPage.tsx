@@ -38,10 +38,7 @@ export const SignInPage: React.FC<Props> = props => {
     ])
     setError(newError)
     if (!hasError(newError)) {
-      const response = await post<{ jwt: string }>(
-        'https://mangosteen2.hunger-valley.com/api/v1/validation_codes',
-        data
-      ).catch(onSubmitError)
+      const response = await post<{ jwt: string }>('/api/v1/session', data).catch(onSubmitError)
       const jwt = response.data.jwt
       localStorage.setItem('jwt', jwt)
       nav(from, { replace: true })
@@ -55,7 +52,7 @@ export const SignInPage: React.FC<Props> = props => {
     setError(newError)
     if (hasError(newError)) { throw new Error('表单出错') }
     const response = await post(
-      'https://mangosteen2.hunger-valley.com/api/v1/validation_codes',
+      '/api/v1/validation_codes',
       { email: data.email }
     )
     return response
